@@ -4,7 +4,7 @@ import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
 
-const LoginPage = () => {
+const ForgotPasswordPage = () => {
     return (
         <>
            <Container>
@@ -40,7 +40,7 @@ const LoginPage = () => {
                     <form>
                     <Grid container spacing={2} mt={1}>
                        
-                        <Grid item md={6}>
+                        <Grid item md={12}>
                           <TextField 
                              id="outlined-basic"
                              label="Email"
@@ -50,20 +50,7 @@ const LoginPage = () => {
                              fullWidth={true}
                            />
                         </Grid>
-                        <Grid item md={6}>
-                          <TextField 
-                             id="outlined-basic"
-                             label="Password"
-                             type="password"
-                             variant="outlined" 
-                             size="small"
-                             fullWidth={true}
-                           />
-                        </Grid>
                      </Grid>
-                     <Typography component="p" sx={{textAlign: 'right'}} color="secondary.main" fontWeight={300} mt={1}>
-                           <Link href="/forgot-password"> Forgot Password?  </Link>
-                     </Typography>
                      <Button sx={{
                         margin: '20px 0px'
                        }} fullWidth={true} >
@@ -84,4 +71,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;
