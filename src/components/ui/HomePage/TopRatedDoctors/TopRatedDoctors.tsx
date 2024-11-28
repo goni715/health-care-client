@@ -1,4 +1,7 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { IDoctor } from "@/types/doctor/doctor.type";
+import { Box, Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
+import Image from "next/image";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const TopRatedDoctors = async () => {
   const res = await fetch(
@@ -28,21 +31,60 @@ const TopRatedDoctors = async () => {
             fontWeight={400}
             sx={{
               mt: 2,
+              color: "text.secondary"
             }}
           >
             Access to expert physicians and surgeons, andanced technologies
           </Typography>
-          <Typography variant="p" component="p" fontSize={18} fontWeight={400}>
+          <Typography  sx={{ color: "text.secondary" }} variant="p" component="p" fontSize={18} fontWeight={400}>
             and top-quality surgery facilities here
           </Typography>
         </Box>
 
-       <Container>
-         <Grid container spacing={2}>
-
-         </Grid>
-       </Container>
-
+        <Container sx={{
+          margin: "40px auto"
+        }}>
+          <Grid container spacing={2}>
+            {doctors?.map((doctor: IDoctor) => (
+              <Grid item key={doctor.id} md={4}>
+                <Card>
+                  <Box>
+                    <Image src={doctor?.profilePhoto} width={500} height={100} alt="doctor"/>
+                  </Box>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {doctor.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                     {doctor.qualification}, {" "} 
+                     {doctor.designation}
+                    </Typography>
+                    <Typography  variant="body2"
+                      sx={{ color: "text.secondary" }} mt={1}>
+                       <LocationOnIcon/> {doctor?.address}
+                    </Typography>
+                  </CardContent>
+                  <CardActions sx={{
+                    justifyContent: 'space-between',
+                    paddingBottom: '20px'
+                  }}>
+                    <Button >Book Now</Button>
+                    <Button variant="outlined">View Profile</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{
+            textAlign: 'center',
+            marginTop: "20px"
+          }}> 
+            <Button variant="outlined">View All </Button> 
+          </Box>
+        </Container>
       </Box>
     </>
   );
