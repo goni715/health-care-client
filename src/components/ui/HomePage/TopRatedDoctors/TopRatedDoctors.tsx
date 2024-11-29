@@ -4,9 +4,13 @@ import Image from "next/image";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const TopRatedDoctors = async () => {
-  const res = await fetch(
-    "http://localhost:5000/api/v1/doctor/get-all-doctors?page=1&limit=3"
-  );
+  const res = await fetch(`${process.env.BACKEND_API_URL}/doctor/get-all-doctors?page=1&limit=3`, {
+    next: {
+      revalidate: 30
+    }
+  })
+
+ 
   const { data: doctors } = await res.json();
   //console.log(doctors)
 
@@ -25,7 +29,6 @@ const TopRatedDoctors = async () => {
             Our Top Rated Doctors
           </Typography>
           <Typography
-            variant="p"
             component="p"
             fontSize={18}
             fontWeight={400}
@@ -36,7 +39,7 @@ const TopRatedDoctors = async () => {
           >
             Access to expert physicians and surgeons, andanced technologies
           </Typography>
-          <Typography  sx={{ color: "text.secondary" }} variant="p" component="p" fontSize={18} fontWeight={400}>
+          <Typography  sx={{ color: "text.secondary" }} component="p" fontSize={18} fontWeight={400}>
             and top-quality surgery facilities here
           </Typography>
         </Box>

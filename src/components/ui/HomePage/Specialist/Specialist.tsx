@@ -3,7 +3,7 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import SpecialistItem from "./SpecialistItem";
 
 const Specialist = async () => {
-  const res = await fetch('http://localhost:5000/api/v1/specialties/get-all-specialties', {
+  const res = await fetch(`${process.env.BACKEND_API_URL}/specialties/get-all-specialties`, {
     next: {
       revalidate: 30
     }
