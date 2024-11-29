@@ -1,3 +1,5 @@
+"use client"
+
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/material';
 import { Grid } from '@mui/material';
@@ -71,7 +73,7 @@ const WhyUs = () => {
                     src={servicesData[0].imageSrc}
                     width={50}
                     height={50}
-                    alg="award"
+                    alt="award"
                   />
                 </Box>
                 <Box>
@@ -135,7 +137,7 @@ const WhyUs = () => {
                     src={servicesData[2].imageSrc}
                     width={50}
                     height={50}
-                    alg="complete"
+                    alt="complete"
                   />
                 </Box>
                 <Box>
@@ -166,7 +168,7 @@ const WhyUs = () => {
                     src={servicesData[3].imageSrc}
                     width={50}
                     height={50}
-                    alg="Dedicated "
+                    alt="Dedicated "
                   />
                 </Box>
                 <Box>
@@ -188,7 +190,7 @@ const WhyUs = () => {
                 margin: '0 auto',
                 justifyContent: 'center'
               }}>
-               <Image src={chooseUsImg} width={400} alg="choose_img" />
+               <Image src={chooseUsImg} width={400} alt="choose_img" />
               </Box>
             </Grid>
           </Grid>
