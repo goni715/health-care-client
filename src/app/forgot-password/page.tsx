@@ -40,7 +40,7 @@ const ForgotPasswordPage = () => {
                     <form>
                     <Grid container spacing={2} mt={1}>
                        
-                        <Grid item md={12}>
+                        <Grid item xs={12}>
                           <TextField 
                              id="outlined-basic"
                              label="Email"

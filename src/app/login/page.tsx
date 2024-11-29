@@ -40,7 +40,7 @@ const LoginPage = () => {
                     <form>
                     <Grid container spacing={2} mt={1}>
                        
-                        <Grid item md={6}>
+                        <Grid item xs={12}>
                           <TextField 
                              id="outlined-basic"
                              label="Email"
@@ -50,7 +50,7 @@ const LoginPage = () => {
                              fullWidth={true}
                            />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12}>
                           <TextField 
                              id="outlined-basic"
                              label="Password"

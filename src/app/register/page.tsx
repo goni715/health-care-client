@@ -3,8 +3,30 @@ import { Container, Stack, Box, Typography, Grid, TextField, Button } from "@mui
 import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
+import { useForm, SubmitHandler } from "react-hook-form";
+import modifyFormData from '@/utils/modifyFormData';
+
+type Inputs = {
+   password: string;
+   patientData: {
+      name: string;
+      email: string;
+      contactNumber: string;
+      address: string
+   }
+
+ };
 
 const RegisterPage = () => {
+   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = data =>{
+   const formData = modifyFormData(data);
+   console.log(formData)
+  } 
+
+
+
     return (
         <>
            <Container>
@@ -37,9 +59,9 @@ const RegisterPage = () => {
                      </Box>
                   </Stack>
                   <Box>
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2} mt={1}>
-                        <Grid item md={12}>
+                        <Grid item xs={12}>
                           <TextField 
                              id="outlined-basic"
                              label="Name"
@@ -47,9 +69,10 @@ const RegisterPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register("patientData.name")}
                            />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={6}>
                           <TextField 
                              id="outlined-basic"
                              label="Email"
@@ -57,9 +80,10 @@ const RegisterPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register("patientData.email")}
                            />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={6}>
                           <TextField 
                              id="outlined-basic"
                              label="Password"
@@ -67,9 +91,10 @@ const RegisterPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register("password")}
                            />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={6}>
                           <TextField 
                              id="outlined-basic"
                              label="Contact Number"
@@ -77,9 +102,10 @@ const RegisterPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register("patientData.contactNumber")}
                            />
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={6}>
                           <TextField 
                              id="outlined-basic"
                              label="Address"
@@ -87,12 +113,17 @@ const RegisterPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register("patientData.address")}
                            />
                         </Grid>
                      </Grid>
-                     <Button sx={{
+                     <Button 
+                       sx={{
                         margin: '20px 0px'
-                       }} fullWidth={true} >
+                       }} 
+                       fullWidth={true}
+                       type="submit"
+                     >
                         Register
                      </Button>
                      <Typography component="p" color="secondary.main" fontWeight={300}>
