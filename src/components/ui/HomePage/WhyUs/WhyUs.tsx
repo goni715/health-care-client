@@ -105,7 +105,7 @@ const WhyUs = () => {
                     src={servicesData[1].imageSrc}
                     width={50}
                     height={50}
-                    alg="best"
+                    alt="best"
                   />
                 </Box>
                 <Box>
