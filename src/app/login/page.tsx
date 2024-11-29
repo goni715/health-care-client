@@ -70,7 +70,7 @@ const LoginPage = () => {
                        Login
                      </Button>
                      <Typography component="p" color="secondary.main" fontWeight={300}>
-                           Don't have an account? 
+                        Don&apos;t have an account? 
                            <Link href="/register" style={{
                               color: "#1586FD"
                            }}> Create an account </Link>
