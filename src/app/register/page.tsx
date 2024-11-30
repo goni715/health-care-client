@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
 import modifyFormData from '@/utils/modifyFormData';
+import registerPatient from "@/services/actions/registerPatient";
+import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import { useRouter } from 'next/navigation'
 
 type Inputs = {
    password: string;
@@ -18,11 +21,35 @@ type Inputs = {
  };
 
 const RegisterPage = () => {
-   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>( {
+      defaultValues: {
+         password: '123456',
+         patientData: {
+            name: 'Patient One',
+            email: 'patient1@gmail.com',
+            contactNumber: '01793837035',
+            address: 'Rajshahi'
+         }
+      }
+   });
 
-  const onSubmit: SubmitHandler<Inputs> = data =>{
+   const router = useRouter()
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) =>{
    const formData = modifyFormData(data);
-   console.log(formData)
+   const toastId = LoadingToast('Processing...')
+
+   try{
+      const res = await registerPatient(formData);
+      if(res.success){
+         SuccessToast('Register Success', toastId);
+         router.push('/login')
+      }else{
+         ErrorToast(res.message, toastId)
+      }
+   }catch(err){
+      ErrorToast('Something Went Wrong', toastId)
+   } 
   } 
 
 
