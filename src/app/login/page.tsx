@@ -3,8 +3,46 @@ import { Container, Stack, Box, Typography, Grid, TextField, Button } from "@mui
 import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
+import { useForm, SubmitHandler } from "react-hook-form";
+import { ILoginUser } from "@/types/globals/globalsType";
+import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import { useRouter } from 'next/navigation';
+import loginUser from "@/services/actions/loginUser";
+
+
 
 const LoginPage = () => {
+   const {
+      register,
+      handleSubmit,
+      watch,
+      formState: { errors },
+    } = useForm<ILoginUser>({
+      defaultValues: {
+         email: 'patient@gmail.com',
+         password: '123456'
+      }
+    });
+
+    const router = useRouter();
+
+
+    const onSubmit: SubmitHandler<ILoginUser> = async (data) =>{
+      const toastId = LoadingToast('Processing...')
+
+      try{
+         const res = await loginUser(data);
+         if(res.success){
+            SuccessToast('Login Success', toastId);
+            //router.push('/login')
+         }else{
+            ErrorToast(res.message, toastId)
+         }
+      }catch(err){
+         ErrorToast('Something Went Wrong', toastId)
+      } 
+    } 
+
     return (
         <>
            <Container>
@@ -37,7 +75,7 @@ const LoginPage = () => {
                      </Box>
                   </Stack>
                   <Box>
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2} mt={1}>
                        
                         <Grid item xs={12}>
@@ -48,6 +86,7 @@ const LoginPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register('email')}
                            />
                         </Grid>
                         <Grid item xs={12}>
@@ -58,6 +97,7 @@ const LoginPage = () => {
                              variant="outlined" 
                              size="small"
                              fullWidth={true}
+                             {...register('password')}
                            />
                         </Grid>
                      </Grid>
@@ -66,7 +106,9 @@ const LoginPage = () => {
                      </Typography>
                      <Button sx={{
                         margin: '20px 0px'
-                       }} fullWidth={true} >
+                       }} fullWidth={true} 
+                       type="submit"
+                     >
                        Login
                      </Button>
                      <Typography component="p" color="secondary.main" fontWeight={300}>
