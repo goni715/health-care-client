@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ILoginUser } from "@/types/globals/globalsType";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import { setToken } from "@/helper/SessionHelper";
 import { useRouter } from 'next/navigation';
 import loginUser from "@/services/actions/loginUser";
 
@@ -34,7 +35,8 @@ const LoginPage = () => {
          const res = await loginUser(data);
          if(res.success){
             SuccessToast('Login Success', toastId);
-            //router.push('/login')
+            setToken(res?.data?.accessToken)
+            window.location.href="/";
          }else{
             ErrorToast(res.message, toastId)
          }

@@ -1,7 +1,13 @@
+"use client";
+import { getUserInfo, isLoggedIn } from "@/helper/SessionHelper";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 const Navbar = () => {
+   const user = getUserInfo();
+
+
+
     return (
       <>
         <Container>
