@@ -2,14 +2,15 @@ import { ReactNode } from "react";
 import { useForm, FormProvider, FieldValues, SubmitHandler } from "react-hook-form";
 
 type TProps = {
-    children: ReactNode
+    children: ReactNode,
+    onSubmit: SubmitHandler<FieldValues>
 }
 
-const PHForm = ({children}: TProps) => {
+const PHForm = ({children, onSubmit}: TProps) => {
     const methods = useForm();
     
-    const onSubmit : SubmitHandler<FieldValues> = (data) => {
-       console.log(data)
+    const submit : SubmitHandler<FieldValues> = async (data) => {
+       await onSubmit(data);
     };
     
 

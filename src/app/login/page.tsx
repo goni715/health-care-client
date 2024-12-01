@@ -3,12 +3,14 @@ import { Container, Stack, Box, Typography, Grid, TextField, Button } from "@mui
 import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { ILoginUser } from "@/types/globals/globalsType";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import { setToken } from "@/helper/SessionHelper";
 import { useRouter } from 'next/navigation';
 import loginUser from "@/services/actions/loginUser";
+import PHForm from "@/components/Forms/PHForm";
+import PHInput from "@/components/Forms/PHInput";
 
 
 
@@ -28,7 +30,7 @@ const LoginPage = () => {
     const router = useRouter();
 
 
-    const onSubmit = async (data: FieldValues) =>{
+    const onSubmit: SubmitHandler<ILoginUser> = async (data) =>{
       const toastId = LoadingToast('Processing...')
 
       try{
@@ -78,32 +80,8 @@ const LoginPage = () => {
                      </Box>
                   </Stack>
                   <Box>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                    <Grid container spacing={2} mt={1}>
-                       
-                        <Grid item xs={12}>
-                          <TextField 
-                             id="outlined-basic"
-                             label="Email"
-                             type="email"
-                             variant="outlined" 
-                             size="small"
-                             fullWidth={true}
-                             {...register('email')}
-                           />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField 
-                             id="outlined-basic"
-                             label="Password"
-                             type="password"
-                             variant="outlined" 
-                             size="small"
-                             fullWidth={true}
-                             {...register('password')}
-                           />
-                        </Grid>
-                     </Grid>
+                    <PHForm onSubmit={onSubmit}>
+                        <PHInput/>
                      <Typography component="p" sx={{textAlign: 'right'}} color="secondary.main" fontWeight={300} mt={1}>
                            <Link href="/forgot-password"> Forgot Password?  </Link>
                      </Typography>
@@ -120,7 +98,7 @@ const LoginPage = () => {
                               color: "#1586FD"
                            }}> Create an account </Link>
                      </Typography>
-                   </form>
+                   </PHForm>
                   </Box>
                 </Box>
              </Stack>
