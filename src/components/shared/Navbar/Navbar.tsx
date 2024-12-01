@@ -1,10 +1,17 @@
 "use client";
-import { getUserInfo, isLoggedIn } from "@/helper/SessionHelper";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import AuthButton from '@/components/shared/Navbar/AuthButton';
+import dynamic from 'next/dynamic'
+
 
 const Navbar = () => {
-   const user = getUserInfo();
+  const AuthButton = dynamic(() => import('@/components/shared/Navbar/AuthButton'), { 
+    ssr: false,
+    loading: () =>  <button className="bg-gray-200 text-gray-200 px-12 py-2 rounded-md animate-pulse"> logout</button>,
+  })
+
 
 
 
@@ -33,9 +40,8 @@ const Navbar = () => {
               <Typography>Diagnostics</Typography>
               <Typography>NGOs</Typography>
             </Stack>
-            <Button component={Link} href="/login">
-              Login
-            </Button>
+           <AuthButton/>
+          
           </Stack>
         </Container>
       </>

@@ -7,7 +7,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import modifyFormData from '@/utils/modifyFormData';
 import registerPatient from "@/services/actions/registerPatient";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import loginUser from "@/services/actions/loginUser";
+import { setToken } from "@/helper/SessionHelper";
+
+
 
 type Inputs = {
    password: string;
@@ -37,13 +41,23 @@ const RegisterPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) =>{
    const formData = modifyFormData(data);
-   const toastId = LoadingToast('Processing...')
+   const toastId = LoadingToast('Processing...');
+   console.log(data)
 
    try{
       const res = await registerPatient(formData);
       if(res.success){
-         SuccessToast('Register Success', toastId);
-         router.push('/login')
+         const loginRes = await loginUser({
+            email: data.patientData.email,
+            password: data.password
+         });
+
+         if(loginRes.success){
+            setToken(loginRes?.data?.accessToken);
+            SuccessToast('Register Success', toastId);
+            router.push('/');
+         }
+
       }else{
          ErrorToast(res.message, toastId)
       }

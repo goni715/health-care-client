@@ -35,8 +35,9 @@ const LoginPage = () => {
          const res = await loginUser(data);
          if(res.success){
             SuccessToast('Login Success', toastId);
-            setToken(res?.data?.accessToken)
-            window.location.href="/";
+            setToken(res?.data?.accessToken);
+            router.push('/')
+            //window.location.href="/";
          }else{
             ErrorToast(res.message, toastId)
          }
