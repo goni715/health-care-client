@@ -28,7 +28,7 @@ const LoginPage = () => {
     const router = useRouter();
 
 
-    const onSubmit = async (data: FieldValues) =>{
+    const onSubmit:SubmitHandler<ILoginUser> = async (data) =>{
       const toastId = LoadingToast('Processing...')
 
       try{

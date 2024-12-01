@@ -3,7 +3,7 @@ import { Container, Stack, Box, Typography, Grid, TextField, Button } from "@mui
 import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 import { ILoginUser } from "@/types/globals/globalsType";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import { setToken } from "@/helper/SessionHelper";
@@ -15,22 +15,13 @@ import PHInput from "@/components/Forms/PHInput";
 
 
 const LoginPage = () => {
-   const {
-      register,
-      handleSubmit,
-      watch,
-      formState: { errors },
-    } = useForm<ILoginUser>({
-      defaultValues: {
-         email: 'patient@gmail.com',
-         password: '123456'
-      }
-    });
+
 
     const router = useRouter();
 
 
-    const onSubmit: SubmitHandler<ILoginUser> = async (data) =>{
+    const onSubmit = async (data: FieldValues) =>{
+      console.log(data)
       const toastId = LoadingToast('Processing...')
 
       try{
@@ -81,7 +72,14 @@ const LoginPage = () => {
                   </Stack>
                   <Box>
                     <PHForm onSubmit={onSubmit}>
-                        <PHInput/>
+                    <Grid container spacing={2} mt={1}>                    
+                       <Grid item xs={12}>
+                          <PHInput name="email" label="Email" type="email"/>
+                       </Grid>
+                       <Grid item xs={12}>
+                          <PHInput name="password" label="Password" type="password"/>
+                       </Grid>
+                    </Grid>        
                      <Typography component="p" sx={{textAlign: 'right'}} color="secondary.main" fontWeight={300} mt={1}>
                            <Link href="/forgot-password"> Forgot Password?  </Link>
                      </Typography>
