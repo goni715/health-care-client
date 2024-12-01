@@ -1,28 +1,35 @@
 "use client"
 import { TextField } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 
 type TInputProps = {
     label: string;
     type: string;
     name: string;
+    disabled?: boolean;
 }
 
 
-const PHInput = ({label, type, name}: TInputProps) => {
-  const { register } = useFormContext();
+const PHInput = ({label, type, name, disabled}: TInputProps) => {
 
   return (
     <>
-      <TextField
-        id="outlined-basic"
-        label={label}
-        type={type}
-        variant="outlined"
-        size="small"
-        fullWidth={true}
-        {...register(name)}
+
+      <Controller
+        name={name}
+        render={({field}) => (
+          <TextField
+            id="outlined-basic"
+            {...field}
+            label={label}
+            type={type}
+            variant="outlined"
+            size="small"
+            fullWidth={true}
+            disabled={disabled}
+          />
+        )}
       />
     </>
   );

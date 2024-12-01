@@ -1,41 +1,44 @@
 "use client"
-import { Container, Stack, Box, Typography, Grid, TextField, Button } from "@mui/material";
+import { Container, Stack, Box, Typography, Grid, Button } from "@mui/material";
 import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
-import { useForm, FieldValues } from "react-hook-form";
-import { ILoginUser } from "@/types/globals/globalsType";
+import { FieldValues } from "react-hook-form";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import { setToken } from "@/helper/SessionHelper";
 import { useRouter } from 'next/navigation';
 import loginUser from "@/services/actions/loginUser";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
+import {useState} from 'react';
+
 
 
 
 const LoginPage = () => {
-
-
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
 
     const onSubmit = async (data: FieldValues) =>{
-      console.log(data)
-      const toastId = LoadingToast('Processing...')
+      const toastId = LoadingToast('Processing...');
+      setLoading(true)
 
       try{
          const res = await loginUser(data);
          if(res.success){
             SuccessToast('Login Success', toastId);
             setToken(res?.data?.accessToken);
+            setLoading(false)
             router.push('/')
             //window.location.href="/";
          }else{
-            ErrorToast(res.message, toastId)
+            ErrorToast(res.message, toastId);
+            setLoading(false)
          }
       }catch(err){
-         ErrorToast('Something Went Wrong', toastId)
+         ErrorToast('Something Went Wrong', toastId);
+         setLoading(false)
       } 
     } 
 
