@@ -4,23 +4,28 @@ import assets from '@/assets';
 import Image from "next/image";
 import Link from 'next/link';
 import { FieldValues } from "react-hook-form";
-import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import { LoadingToast, SuccessToast, DismissToast } from "@/helper/ValidationHelper";
 import { setToken } from "@/helper/SessionHelper";
 import { useRouter } from 'next/navigation';
 import loginUser from "@/services/actions/loginUser";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
+import Error from "@/components/ui/Error/Error";
 import {useState} from 'react';
+import { LoginSchema } from "@/schemas/auth.schema";
+
 
 
 
 
 const LoginPage = () => {
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('')
     const router = useRouter();
 
 
     const onSubmit = async (data: FieldValues) =>{
+      setError('')
       const toastId = LoadingToast('Processing...');
       setLoading(true)
 
@@ -32,12 +37,13 @@ const LoginPage = () => {
             setLoading(false)
             router.push('/')
             //window.location.href="/";
-         }else{
-            ErrorToast(res.message, toastId);
+         }else{         
+            DismissToast();
+            setError(res.message)
             setLoading(false)
          }
       }catch(err){
-         ErrorToast('Something Went Wrong', toastId);
+         DismissToast();
          setLoading(false)
       } 
     } 
@@ -73,8 +79,11 @@ const LoginPage = () => {
                         </Typography>
                      </Box>
                   </Stack>
+                  {error && (
+                     <Error message={error}/>
+                  )}
                   <Box>
-                    <PHForm onSubmit={onSubmit}>
+                    <PHForm onSubmit={onSubmit} schema={LoginSchema}>
                     <Grid container spacing={2} mt={1}>                    
                        <Grid item xs={12}>
                           <PHInput name="email" label="Email" type="email"/>
@@ -90,6 +99,7 @@ const LoginPage = () => {
                         margin: '20px 0px'
                        }} fullWidth={true} 
                        type="submit"
+                       disabled={loading}
                      >
                        Login
                      </Button>

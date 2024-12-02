@@ -15,8 +15,12 @@ class ValidationHelper {
     ErrorToast(...params: (string | number)[]){
         toast.error(params[0], { id:params[1], duration:2000 });
     }
+
+    DismissToast(){
+        toast.dismiss();
+    }
 }
 
 
 
-export const { SuccessToast, LoadingToast, ErrorToast } = new ValidationHelper();
+export const { SuccessToast, LoadingToast, ErrorToast, DismissToast } = new ValidationHelper();

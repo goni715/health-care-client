@@ -1,5 +1,6 @@
 "use client"
 import { TextField } from "@mui/material";
+import { error } from "console";
 import { Controller, useFormContext } from "react-hook-form";
 
 
@@ -18,7 +19,7 @@ const PHInput = ({label, type, name, disabled}: TInputProps) => {
 
       <Controller
         name={name}
-        render={({field}) => (
+        render={({field, fieldState:{error}}) => (
           <TextField
             id="outlined-basic"
             {...field}
@@ -28,6 +29,8 @@ const PHInput = ({label, type, name, disabled}: TInputProps) => {
             size="small"
             fullWidth={true}
             disabled={disabled}
+            error={!!error?.message}
+            helperText={error?.message}
           />
         )}
       />
