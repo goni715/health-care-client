@@ -25,7 +25,7 @@ export const LoginSchema = z.object({
 });
 
 
-export const registerSchema = z.object({
+export const RegisterSchema = z.object({
   password: z
     .string({
       required_error: "Password is required !",
@@ -39,11 +39,12 @@ export const registerSchema = z.object({
     }),
   patientData: z.object({
     email: z
-      .string({
-        required_error: "Email is required",
-      })
-      .trim()
-      .email({ message: "Invalid email address" }),
+    .string({
+      required_error: "Email is required",
+    })
+    .min(1, { message:  "Email is required" })
+    .trim()
+    .email({ message: "Invalid email address" }),
     name: z
       .string({
         required_error: "Name is required",
@@ -58,7 +59,9 @@ export const registerSchema = z.object({
         message: "Name must only contain alphabets", //"Name must only contain letters and spaces"
       }),
     contactNumber: z
-      .string()
+      .string({
+        required_error: 'Contact Number is required'
+      })
       .trim()
       .min(1, { message: "Contact Number is required" })
       .trim()
@@ -72,6 +75,5 @@ export const registerSchema = z.object({
       .min(1, { message: "Address is required" })
       .trim()
       .max(60, "Address maximum 60 characters.")
-      .optional(),
   }),
 });

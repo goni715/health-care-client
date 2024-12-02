@@ -24,6 +24,7 @@ import { setToken } from "@/helper/SessionHelper";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
 import {useState} from 'react';
+import { RegisterSchema } from "@/schemas/auth.schema";
 
 
 const RegisterPage = () => {
@@ -105,7 +106,7 @@ const RegisterPage = () => {
               </Box>
             </Stack>
             <Box>
-              <PHForm onSubmit={onSubmit}>
+              <PHForm onSubmit={onSubmit} schema={RegisterSchema}>
                 <Grid container spacing={2} mt={1}>
                   <Grid item xs={12}>
                     <PHInput
