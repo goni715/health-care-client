@@ -2,6 +2,8 @@
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../theme/theme";
 import { ReactNode } from "react";
+import { Provider } from "react-redux";
+import { store } from './../../redux/store/store';
 
 
 type TProps = {
@@ -10,11 +12,11 @@ type TProps = {
 
 const Providers = ({children}: TProps) => {
     return (
-        <>
-            <ThemeProvider theme={theme}>
-                {children}
-            </ThemeProvider>
-        </>
+      <>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </Provider>
+      </>
     );
 };
 
