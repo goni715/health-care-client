@@ -14,7 +14,7 @@ import { logout } from "@/helper/SessionHelper";
 
 
 
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = ['Profile', 'Change Password'];
 
 type TProps ={
     handleDrawerToggle: () => void;
