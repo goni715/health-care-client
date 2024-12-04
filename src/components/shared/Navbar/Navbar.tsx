@@ -1,15 +1,13 @@
 "use client";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
-import AuthButton from '@/components/shared/Navbar/AuthButton';
 import dynamic from 'next/dynamic'
 
 
 const Navbar = () => {
   const AuthButton = dynamic(() => import('@/components/shared/Navbar/AuthButton'), { 
     ssr: false,
-    loading: () =>  <button className="bg-gray-200 text-gray-200 px-12 py-2 rounded-md animate-pulse"> logout</button>,
+    loading: () =>  <button className="logout-button"> logout</button>,
   })
 
 

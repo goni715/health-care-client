@@ -10,7 +10,9 @@ const CommonLayout = ({children}: TProps) => {
     return (
         <>
             <Navbar/>
-             <div className="min-h-screen"> 
+             <div style={{
+                minHeight: '100vh'
+             }}> 
                 {children}
              </div>
             <Footer/>

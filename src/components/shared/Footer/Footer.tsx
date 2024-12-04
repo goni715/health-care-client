@@ -28,7 +28,6 @@ const Footer = () => {
               <Image src={linkedinIcon} width={30} height={30} alt="facebook"/>
               <Image src={twitterIcon} width={30} height={30} alt="facebook"/>
             </Stack>
-            {/* <div className="border-b-[1px] border-dashed"></div> */}
             <Box sx={{
               border: '1px solid lightgray'
             }}></Box>
