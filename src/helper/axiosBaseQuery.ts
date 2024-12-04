@@ -1,3 +1,4 @@
+import { TMeta } from '@/types/globals/globalsType'
 import type { BaseQueryFn } from '@reduxjs/toolkit/query'
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosError } from 'axios'
@@ -12,6 +13,7 @@ export const axiosBaseQuery =
       data?: AxiosRequestConfig['data']
       params?: AxiosRequestConfig['params']
       headers?: AxiosRequestConfig['headers']
+      meta?: TMeta
     },
     unknown,
     unknown
