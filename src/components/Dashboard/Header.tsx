@@ -11,7 +11,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from 'next/navigation';
 import { logout } from "@/helper/SessionHelper";
-
+import avatar from '@/assets/avatar.png';
+import Image from 'next/image';
 
 
 const settings = ['Profile', 'Change Password'];
@@ -66,7 +67,7 @@ const Header = ({handleDrawerToggle, drawerWidth}: TProps) =>{
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Image alt="Remy Sharp" src={avatar} width={40} height={40}/>
               </IconButton>
             </Tooltip>
             <Menu

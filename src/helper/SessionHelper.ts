@@ -24,6 +24,10 @@ class SessionHelper {
       const decodedData = jwtDecode(token);
       return decodedData;
     }
+    if (typeof window !== "undefined" && window.localStorage) {
+       window.localStorage.clear();
+       window.location.href = "/";
+    }
   }
 
   isLoggedIn() {
@@ -37,7 +41,7 @@ class SessionHelper {
 
   logout() {
     localStorage.clear();
-    //window.location.href = "/";
+    window.location.href = "/";
   }
 }
 

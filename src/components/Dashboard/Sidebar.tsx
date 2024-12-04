@@ -1,20 +1,30 @@
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-} from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { List, Stack, Typography } from "@mui/material";
 import logo from "@/assets/svgs/logo.svg";
 import Image from "next/image";
-import Link from 'next/link'
+import Link from "next/link";
+import generateMenuItems from "@/utils/generateMenuItems";
+import SidebarItem from "./SidebarItem";
+import { getUserInfo } from "@/helper/SessionHelper";
+import { TUserRole } from "@/types/globals/globalsType";
+import { useEffect, useState } from "react";
+
+type IAuthUser = {
+  id: string;
+  iat: number;
+  email: string;
+  role: TUserRole;
+};
 
 const Sidebar = () => {
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const { role } = getUserInfo() as IAuthUser;
+    setUserRole(role);
+  }, []);
+
+  const menuItems = generateMenuItems(userRole as TUserRole);
+
   return (
     <>
       <Stack
@@ -36,28 +46,8 @@ const Sidebar = () => {
       </Stack>
       <div>
         <List>
-          {["Inbox", "Starre", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
+          {menuItems?.map((item, index) => (
+            <SidebarItem key={index} item={item} />
           ))}
         </List>
       </div>
