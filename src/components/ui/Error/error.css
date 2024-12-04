@@ -1,0 +1,10 @@
+.error-container {
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    color: #a94442;
+    background-color: #f2dede;
+    border-radius: 0.25rem;
+    border: 1px solid #f2dede;
+  }
+  
