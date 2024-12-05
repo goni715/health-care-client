@@ -1,6 +1,5 @@
 "use client";
-
-import PHModal from "@/components/Modal/PHModal/PHModal";
+import CreateSpecialtyModal from "@/components/Modal/SpecialtiesModal/CreateSpecialtyModal";
 import { Box, Stack, Button, TextField } from "@mui/material";
 
 const SpecialtiesPage = () => {
@@ -15,7 +14,7 @@ const SpecialtiesPage = () => {
           alignItems="center"
         >
           <Button>Create Specialty</Button>
-          <PHModal/>
+          <CreateSpecialtyModal/>
           {/* <SpecialtyModal open={isModalOpen} setOpen={setIsModalOpen} /> */}
           <TextField size="small" placeholder="Search Specialist" />
         </Stack>

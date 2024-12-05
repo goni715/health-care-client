@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import {Dispatch, SetStateAction} from 'react';
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -18,9 +19,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+type TProps = {
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>> 
+}
 
-const PHModal = () => {
-  const [open, setOpen] = React.useState(false);
+
+const PHModal = ({open, setOpen}: TProps) => {
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,7 +35,7 @@ const PHModal = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button variant="outlined" onClick={handleClickOpen}>
         Open dialog
       </Button>
@@ -76,7 +81,7 @@ const PHModal = () => {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-    </React.Fragment>
+    </>
   );
 }
 
