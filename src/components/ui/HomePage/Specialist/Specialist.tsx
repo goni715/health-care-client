@@ -24,7 +24,7 @@ const Specialist = async () => {
                       </Typography>
                     </Box>
                     <Stack direction="row" gap={4} mt={5}> 
-                  {specialties?.map((speciality:ISpecialties)=> (
+                  {specialties?.slice(0,6)?.map((speciality:ISpecialties)=> (
                      <SpecialistItem key={speciality.id} speciality={speciality}/>
                   ))}
                 </Stack>

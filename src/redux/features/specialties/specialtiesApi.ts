@@ -8,9 +8,17 @@ const specialtiesApi = baseApi.injectEndpoints({
         method: 'POST',
         contentType: 'multipart/form-data',
         data:data,
-      })
+      }),
+      invalidatesTags: ["Specialties"],
+    }),
+    getAllSpecialties: build.query({
+      query: () => ({
+        url: "/specialties/get-all-specialties",
+        method: "GET",
+      }),
+      providesTags: ["Specialties"],
     }),
   }),
 })
 
-export const { useCreateSpecialtyMutation } = specialtiesApi;
+export const { useCreateSpecialtyMutation, useGetAllSpecialtiesQuery } = specialtiesApi;

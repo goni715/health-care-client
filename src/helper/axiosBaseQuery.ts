@@ -30,14 +30,17 @@ export const axiosBaseQuery =
           'Content-Type': contentType || "application/json"
         }
       })
-      return { data: result.data }
+      //return { data: result.data }
+      return result;
     } catch (axiosError) {
       const err = axiosError as AxiosError
-      return {
-        error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
-        },
-      }
+      console.log(axiosError)
+      // return {
+      //   error: {
+      //     status: err.response?.status,
+      //     data: err.response?.data || err.message,
+      //   },
+      // }
+      return err;
     }
   }
