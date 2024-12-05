@@ -78,7 +78,7 @@ const generateMenuItems = (role: TUserRole): TDrawerItem[] => {
         },
         {
           title: "Appointments",
-          path: `${role}/appointment`,
+          path: `${role}/appointments`,
           icon: BookOnlineIcon,
         }
       );
