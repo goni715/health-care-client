@@ -27,7 +27,11 @@ type TProps = {
 const PHModal = ({open, setOpen, title, children}: TProps) => {
 
  
-  const handleClose = () => {
+  const handleClose = (event: React.SyntheticEvent, reason: string) => {
+    // Prevent closing the dialog on overlay click or escape key
+    if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+      return;
+    }
     setOpen(false);
   };
 
@@ -44,7 +48,7 @@ const PHModal = ({open, setOpen, title, children}: TProps) => {
         </DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={() => setOpen(false)}
           sx={(theme) => ({
             position: 'absolute',
             right: 8,
