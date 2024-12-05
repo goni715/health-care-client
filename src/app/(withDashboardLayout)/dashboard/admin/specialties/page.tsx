@@ -13,7 +13,7 @@ const SpecialtiesPage = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Button>Create Specialty</Button>
+          
           <CreateSpecialtyModal/>
           {/* <SpecialtyModal open={isModalOpen} setOpen={setIsModalOpen} /> */}
           <TextField size="small" placeholder="Search Specialist" />
