@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Controller, useFormContext } from "react-hook-form";
 import { Input } from "@mui/material";
+import convertToBase64 from '@/helper/convertToBase64';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -51,12 +52,12 @@ const PHFileUploader = ({name, label}: TProps) => {
               {...field}
               type={name}
               value={value?.fileName}
-              onChange={(e) => {
-                console.log(e.target.files?.[0])
-                //const val = JSON.stringify((e?.target as HTMLInputElement).files?.[0]);
-                const val = JSON.stringify(e?.target.files?.[0]);
-                console.log(val)
-                onChange(val);
+              onChange={ async (e) => {
+                //console.log(e.target.files?.[0])
+                const base64String = await convertToBase64(((e?.target as HTMLInputElement).files?.[0]) as File);
+                //const val = JSON.stringify(e?.target.files?.[0]);
+                //console.log(val)
+                onChange(base64String);
               }}
               style={{ display: "none" }}
             />

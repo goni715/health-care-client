@@ -5,11 +5,12 @@ import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
 import PHFileUploader from "@/components/Forms/PHFileUploader";
 import { createSpecialtiesSchema } from "@/schemas/specialties.schema";
+import { FieldValues } from "react-hook-form";
 
 const CreateSpecialtyModal = () => {
   const [open, setOpen] = useState(false);
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = (data: FieldValues) => {
     console.log(data)
   }
 
