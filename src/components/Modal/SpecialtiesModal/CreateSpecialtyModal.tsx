@@ -6,12 +6,26 @@ import PHInput from "@/components/Forms/PHInput";
 import PHFileUploader from "@/components/Forms/PHFileUploader";
 import { createSpecialtiesSchema } from "@/schemas/specialties.schema";
 import { FieldValues } from "react-hook-form";
+import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
+import modifyFormData from "@/utils/modifyFormData";
+import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 
 const CreateSpecialtyModal = () => {
   const [open, setOpen] = useState(false);
+  const [createSpecialty, {isLoading}] = useCreateSpecialtyMutation();
 
-  const handleFormSubmit = (data: FieldValues) => {
-    console.log(data)
+  const handleFormSubmit = async (data: FieldValues) => {
+    const formData = modifyFormData(data);
+    const toastId = LoadingToast('Creating...');
+    
+    try{
+      const res = await createSpecialty(formData).unwrap();
+      console.log(res);
+      SuccessToast('Specialty created Successfully', toastId)
+    }catch(err){
+      console.log(err)
+      ErrorToast("Something went wrong", toastId);
+    }
   }
 
   return (
@@ -27,7 +41,7 @@ const CreateSpecialtyModal = () => {
             <PHFileUploader name="file" label="Upload File" />
           </Grid>
         </Grid>
-        <Button sx={{ mt: 1 }} type="submit">
+        <Button sx={{ mt: 1 }} type="submit" disabled={isLoading}>
           Create
         </Button>
       </PHForm>

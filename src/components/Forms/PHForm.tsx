@@ -26,7 +26,6 @@ const PHForm = ({children, onSubmit, schema, defaultValues}: TProps) => {
       }
 
     const methods = useForm(formConfig);
-    console.log(methods.formState.errors)
     
     const submit : SubmitHandler<FieldValues> = async (data) => {
        await onSubmit(data);

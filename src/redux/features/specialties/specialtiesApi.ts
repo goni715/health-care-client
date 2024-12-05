@@ -1,8 +1,8 @@
 import { baseApi } from "../api/baseApi"
 
 const specialtiesApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
-    createSpeciality: builder.mutation({
+  endpoints: (build) => ({
+    createSpecialty: build.mutation({
       query: (data) => ({
         url: `/specialties/create-specialties`,
         method: 'POST',
@@ -13,4 +13,4 @@ const specialtiesApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useCreateSpecialityMutation } = specialtiesApi;
+export const { useCreateSpecialtyMutation } = specialtiesApi;
