@@ -6,32 +6,43 @@ import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
 import { createDoctorSchema } from "@/schemas/doctor.schema";
 import { FieldValues } from "react-hook-form";
-import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
 import modifyFormData from "@/utils/modifyFormData";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import PHSelect from "@/components/Forms/PHSelect";
+import { useCreateDoctorMutation } from "@/redux/features/doctor/doctorApi";
 
 const CreateDoctorModal = () => {
   const [open, setOpen] = useState(false);
-  const [createSpecialty, {isLoading}] = useCreateSpecialtyMutation();
+  const [createDoctor, {isLoading}] = useCreateDoctorMutation();
 
   const handleFormSubmit = async (data: FieldValues) => {
-    const formData = modifyFormData(data);
-    const toastId = LoadingToast('Creating...');
     
-    try{
-      const res = await createSpecialty(formData).unwrap();
-      if(res?.id){
-        SuccessToast('Specialty created Successfully', toastId);
-        setOpen(false)
-      }else{
-        ErrorToast("Something went wrong", toastId);
+    const values = {
+      password:data.password,
+      doctorData: {
+        ...data.doctorData,
+        appointmentFee: Number(data.doctorData.appointmentFee),
+        experience: Number(data.doctorData.experience)
       }
-    }catch(err){
-      ErrorToast("Something went wrong", toastId);
-      setOpen(false)
+     
     }
-  }
+
+    const formData = modifyFormData(values);
+    const toastId = LoadingToast('Creating...');
+    try{
+      const res = await createDoctor(formData).unwrap();
+      if(res?.id){
+        SuccessToast("Doctor created successfully", toastId);
+        setOpen(false)
+      }
+      else{
+        ErrorToast('Something Went Wrong', toastId)
+      }
+    }
+    catch(err){
+      ErrorToast('Something Went Wrong', toastId)
+    }
+ }
 
   return (
     <>
@@ -87,12 +98,12 @@ const CreateDoctorModal = () => {
             <PHInput
               name="doctorData.experience"
               type="text"
-              label="Experience (optional)"
+              label="Experience (years)"
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHSelect
-              name="doctor.gender"
+              name="doctorData.gender"
               label="Gender"
             /> 
           </Grid>

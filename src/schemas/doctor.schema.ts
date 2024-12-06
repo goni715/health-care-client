@@ -7,6 +7,7 @@ export const createDoctorSchema = z.object({
       .string({
         required_error: "Password is required !",
       })
+      .min(1, { message: "Password is required !" })
       .min(6, { message: "Password minimum 6 characters" })
       .trim()
       .max(60, { message: "Password maximum 60 characters" })
@@ -25,7 +26,7 @@ export const createDoctorSchema = z.object({
         .string({
           required_error: "Name is required",
         })
-        .min(1, { message: '"Name is required"' })
+        .min(1, { message: "Name is required" })
         .trim()
         .max(60, "Name maximum 60 characters.")
         .refine(capitalizeValidator, {
@@ -35,7 +36,9 @@ export const createDoctorSchema = z.object({
           message: "Name must only contain alphabets", //"Name must only contain letters
         }),
       contactNumber: z
-        .string()
+        .string({
+          required_error: "Contact Number is required"
+        })
         .trim()
         .min(1, { message: "Contact Number is required" })
         .trim()
@@ -56,12 +59,26 @@ export const createDoctorSchema = z.object({
         .min(1, { message: "Registration Number is required" })
         .trim()
         .max(60, "Registration Number maximum 60 characters."),
-      experience: z.number().default(0),
-      gender: z.enum(["male", "female"], {
-        errorMap: () => ({ message: "{VALUE} is not supported" }),
-      }),
+      experience:  z
+      .string()
+      .trim()
+      .max(2, "ClassTest 1 can't be more than 2 characters")
+      .transform((val) => (val === "" ? "0" : val))
+      .refine((value) => NonWhiteSpaceRegex.test(value), {
+        message: "ClassTest1 Could not contain White space",
+      })
+      .refine((value) => /^\d+$/.test(value), {
+        message: "ClassTest1 must only contain integer Numbers",
+      })
+      .refine((value) => Number(value) <= 10, {
+        message: "ClassTest1 maximum 10 marks",
+      })
+      .default("0"),
+      gender: z.string({
+        required_error: "Please Select a Gender"
+      }).min(1, "Please Select a Gender"),
       appointmentFee: z
-        .number({
+        .string({
           required_error: "Appointment Fee is required",
         })
         .min(1, { message: "Appointment Fee is required" }),

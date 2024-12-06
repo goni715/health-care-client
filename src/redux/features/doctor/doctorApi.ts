@@ -9,7 +9,16 @@ const doctorApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Doctors"],
     }),
+    createDoctor: build.mutation({
+      query: (data) => ({
+        url: `/user/create-doctor`,
+        method: 'POST',
+        contentType: 'multipart/form-data',
+        data:data,
+      }),
+      invalidatesTags: ["Doctors"],
+    }),
   }),
 })
 
-export const { useGetAllDoctorsQuery } = doctorApi;
+export const { useGetAllDoctorsQuery, useCreateDoctorMutation } = doctorApi;
