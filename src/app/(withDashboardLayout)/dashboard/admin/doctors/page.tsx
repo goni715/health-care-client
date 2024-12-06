@@ -3,17 +3,22 @@ import CreateDoctorModal from "@/components/Modal/DoctorModal/CreateDoctorModal"
 import { useGetAllDoctorsQuery } from "@/redux/features/doctor/doctorApi";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import Link from 'next/link';
 import EditIcon from "@mui/icons-material/Edit";
+import { useState } from 'react';
 
 
 
 const DoctorsPage = () => {
-  const { data, isLoading } = useGetAllDoctorsQuery(undefined);
+  const query: Record<string, unknown> = {};
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  query['searchTerm'] = searchTerm;
+  const { data, isLoading } = useGetAllDoctorsQuery({...query});
+
   //const [deleteSpecialty] = useDeleteSpecialtyMutation()
+
 
   const handleDelete = async (id:string) => {
     const toastId = LoadingToast('Deleting...');
@@ -73,7 +78,7 @@ const DoctorsPage = () => {
           alignItems="center"
         >
           <CreateDoctorModal />
-          <TextField size="small" placeholder="Search Specialist" />
+          <TextField onChange={(e)=>setSearchTerm(e.target.value)} size="small" placeholder="Search Specialist" />
         </Stack>
         {isLoading ? (
           <>
