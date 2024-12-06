@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import PHModal from "@/components/Modal/PHModal/PHModal";
+import PHFullscreenModal from "@/components/Modal/PHModal/PHFullscreenModal";
 import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
@@ -36,7 +36,7 @@ const CreateDoctorModal = () => {
   return (
     <>
       <Button variant="outlined" onClick={()=>setOpen(true)}>Create Doctor</Button>
-      <PHModal open={open} setOpen={setOpen} title="Create A New Specialty" >
+      <PHFullscreenModal open={open} setOpen={setOpen} title="Create New Doctor" >
       <PHForm onSubmit={handleFormSubmit} schema={createSpecialtiesSchema}>
         <Grid container spacing={2}>
           <Grid item md={6}>
@@ -51,7 +51,7 @@ const CreateDoctorModal = () => {
         </Button>
       </PHForm>
 
-      </PHModal>
+      </PHFullscreenModal>
     </>
   );
 };
