@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import PHModal from "@/components/Modal/PHModal/PHModal";
 import { Button, Grid } from "@mui/material";
@@ -20,7 +21,6 @@ const CreateSpecialtyModal = () => {
     
     try{
       const res = await createSpecialty(formData).unwrap();
-      ErrorToast("Something went wrong", toastId);
       if(res?.id){
         SuccessToast('Specialty created Successfully', toastId);
         setOpen(false)
@@ -28,7 +28,6 @@ const CreateSpecialtyModal = () => {
         ErrorToast("Something went wrong", toastId);
       }
     }catch(err){
-      console.log(err)
       ErrorToast("Something went wrong", toastId);
       setOpen(false)
     }

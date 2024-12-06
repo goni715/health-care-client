@@ -1,14 +1,31 @@
 "use client";
 import CreateSpecialtyModal from "@/components/Modal/SpecialtiesModal/CreateSpecialtyModal";
-import { useGetAllSpecialtiesQuery } from "@/redux/features/specialties/specialtiesApi";
+import { useDeleteSpecialtyMutation, useGetAllSpecialtiesQuery } from "@/redux/features/specialties/specialtiesApi";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 
 const SpecialtiesPage = () => {
   const { data, isLoading } = useGetAllSpecialtiesQuery(undefined);
+  const [deleteSpecialty] = useDeleteSpecialtyMutation()
+
+  const handleDelete = async (id:string) => {
+    const toastId = LoadingToast('Deleting...');
+    
+    try{
+      const res = await deleteSpecialty(id).unwrap();
+      console.log(res)
+      if(res?.id){
+        SuccessToast('Specialty deleted Successfully', toastId);
+      }else{
+        ErrorToast("Something went wrong", toastId);
+      }
+    }catch(err){
+      ErrorToast("Something went wrong", toastId);
+    }
+  }
 
 
   const columns: GridColDef[] = [
@@ -33,7 +50,7 @@ const SpecialtiesPage = () => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <IconButton aria-label="delete">
+          <IconButton onClick={() => handleDelete(row.id)} aria-label="delete">
             <DeleteIcon />
           </IconButton>
         );
@@ -58,12 +75,9 @@ const SpecialtiesPage = () => {
           </>
         ) : (
           <>
-            <DataGrid
-              rows={data}
-              columns={columns}
-              sx={{ border: 0 }}
-              hideFooter={true}
-            />
+            <Box my={2}>
+              <DataGrid rows={data} columns={columns} hideFooter={true} />
+            </Box>
           </>
         )}
       </Box>
