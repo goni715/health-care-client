@@ -20,13 +20,13 @@ const CreateSpecialtyModal = () => {
     
     try{
       const res = await createSpecialty(formData).unwrap();
-      console.log(res?.message)
-      // if(res?.id){
-      //   SuccessToast('Specialty created Successfully', toastId);
-      //   setOpen(false)
-      // }else{
-      //   ErrorToast("Something went wrong", toastId);
-      // }
+      ErrorToast("Something went wrong", toastId);
+      if(res?.id){
+        SuccessToast('Specialty created Successfully', toastId);
+        setOpen(false)
+      }else{
+        ErrorToast("Something went wrong", toastId);
+      }
     }catch(err){
       console.log(err)
       ErrorToast("Something went wrong", toastId);
