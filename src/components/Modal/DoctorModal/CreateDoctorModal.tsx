@@ -4,12 +4,12 @@ import PHFullscreenModal from "@/components/Modal/PHModal/PHFullscreenModal";
 import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
-import PHFileUploader from "@/components/Forms/PHFileUploader";
-import { createSpecialtiesSchema } from "@/schemas/specialties.schema";
+import { createDoctorSchema } from "@/schemas/doctor.schema";
 import { FieldValues } from "react-hook-form";
 import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
 import modifyFormData from "@/utils/modifyFormData";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import PHSelect from "@/components/Forms/PHSelect";
 
 const CreateDoctorModal = () => {
   const [open, setOpen] = useState(false);
@@ -37,13 +37,93 @@ const CreateDoctorModal = () => {
     <>
       <Button variant="outlined" onClick={()=>setOpen(true)}>Create Doctor</Button>
       <PHFullscreenModal open={open} setOpen={setOpen} title="Create New Doctor" >
-      <PHForm onSubmit={handleFormSubmit} schema={createSpecialtiesSchema}>
-        <Grid container spacing={2}>
-          <Grid item md={6}>
-            <PHInput type="text" name="title" label="Title" />
+      <PHForm onSubmit={handleFormSubmit} schema={createDoctorSchema}>
+      <Grid container spacing={2} sx={{ my: 5 }}>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              type="text"
+              name="doctorData.name"
+              label="Name"
+            />
           </Grid>
-          <Grid item md={6}>
-            <PHFileUploader name="file" label="Upload File" />
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.email"
+              type="text"
+              label="Email"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="password"
+              type="password"
+              label="Password"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.contactNumber"
+              type="text"
+              label="Contract Number"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.address"
+              label="Address"
+              type="text"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.registrationNumber"
+              label="Registration Number"
+              type="text"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.experience"
+              type="text"
+              label="Experience (optional)"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHSelect
+              name="doctor.gender"
+              label="Gender"
+            /> 
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.appointmentFee"
+              label="ApointmentFee"
+              type="text"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.qualification"
+              label="Qualification"
+              type="text"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.currentWorkingPlace"
+              label="Current Working Place"
+              type="text"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <PHInput
+              name="doctorData.designation"
+              label="Designation"
+              type="text"
+            />
           </Grid>
         </Grid>
         <Button sx={{ mt: 1 }} type="submit" disabled={isLoading}>
