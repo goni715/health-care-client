@@ -6,6 +6,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import Link from 'next/link';
+import EditIcon from "@mui/icons-material/Edit";
+
+
 
 const DoctorsPage = () => {
   const { data, isLoading } = useGetAllDoctorsQuery(undefined);
@@ -35,19 +39,29 @@ const DoctorsPage = () => {
     { field: "gender", headerName: "Gender", flex: 1 },
     { field: "appointmentFee", headerName: "Appointment Fee", flex: 1 },
     {
-      field: "action",
-      headerName: "Action",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: ({ row }) => {
-        return (
-          <IconButton onClick={() => handleDelete(row.id)} aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        );
+        field: "action",
+        headerName: "Action",
+        flex: 1,
+        headerAlign: "center",
+        align: "center",
+        renderCell: ({ row }) => {
+          return (
+            <Box>
+              <IconButton
+                onClick={() => handleDelete(row.id)}
+                aria-label="delete"
+              >
+                <DeleteIcon sx={{ color: "red" }} />
+              </IconButton>
+              <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
+                <IconButton aria-label="delete">
+                  <EditIcon />
+                </IconButton>
+              </Link>
+            </Box>
+          );
+        },
       },
-    },
   ];
 
   return (
