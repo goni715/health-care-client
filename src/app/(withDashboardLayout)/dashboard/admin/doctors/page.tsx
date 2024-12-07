@@ -8,13 +8,22 @@ import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelpe
 import Link from 'next/link';
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from 'react';
+import useDebounced from '@/hooks/useDebounced';
 
 
 
 const DoctorsPage = () => {
   const query: Record<string, unknown> = {};
   const [searchTerm, setSearchTerm] = useState<string>('');
-  query['searchTerm'] = searchTerm;
+ 
+  const debouncedValue = useDebounced({
+    searchQuery: searchTerm,
+    delay: 2000,
+  });
+
+  if(debouncedValue !==""){
+    query['searchTerm']=debouncedValue
+  }
   const { data, isLoading } = useGetAllDoctorsQuery({...query});
 
   //const [deleteSpecialty] = useDeleteSpecialtyMutation()
