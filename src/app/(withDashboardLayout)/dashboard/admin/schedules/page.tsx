@@ -1,8 +1,31 @@
+import CreateScheduleModal from "@/components/Modal/ScheduleModal/CreateScheduleModal";
+import { Box, Stack, TextField } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 const SchedulesPage = () => {
     return (
         <>
-            <h1>Schedules Page</h1>
+              <Box>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <CreateScheduleModal />
+          <TextField size="small" placeholder="Search..." />
+        </Stack>
+        {/* {isLoading ? (
+          <>
+            <h1>Loading...</h1>
+          </>
+        ) : (
+          <>
+            <Box my={2}>
+              <DataGrid rows={data} columns={columns} hideFooter={true} />
+            </Box>
+          </>
+        )} */}
+      </Box>
         </>
     );
 };

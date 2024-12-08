@@ -11,7 +11,7 @@ const useDebounced = ({ searchQuery, delay }: TDebouncedProps) => {
   
     useEffect(() => {
       let timeoutId;
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId); //clear timeout after onChange
       timeoutId = setTimeout(() => {
         if(searchQuery.length > 1){
            setDebouncedValue(searchQuery);
@@ -19,8 +19,6 @@ const useDebounced = ({ searchQuery, delay }: TDebouncedProps) => {
            setDebouncedValue(""); 
         }
       }, delay);    
-
-     
     }, [searchQuery, delay]);
   
     return debouncedValue;

@@ -18,7 +18,7 @@ const DoctorsPage = () => {
  
   const debouncedValue = useDebounced({
     searchQuery: searchTerm,
-    delay: 2000,
+    delay: 600,
   });
 
   if(debouncedValue !==""){
