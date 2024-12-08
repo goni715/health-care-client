@@ -1,5 +1,5 @@
 import CreateScheduleModal from "@/components/Modal/ScheduleModal/CreateScheduleModal";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 const SchedulesPage = () => {
@@ -12,7 +12,6 @@ const SchedulesPage = () => {
           alignItems="center"
         >
           <CreateScheduleModal />
-          <TextField size="small" placeholder="Search..." />
         </Stack>
         {/* {isLoading ? (
           <>
