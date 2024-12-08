@@ -3,9 +3,8 @@ import { useState } from "react";
 import PHModal from "@/components/Modal/PHModal/PHModal";
 import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
-import PHInput from "@/components/Forms/PHInput";
-import PHFileUploader from "@/components/Forms/PHFileUploader";
-import { createSpecialtiesSchema } from "@/schemas/specialties.schema";
+import PHDatePicker from "@/components/Forms/PHDatePicker";
+import { createScheduleSchema } from "@/schemas/schedule.schema";
 import { FieldValues } from "react-hook-form";
 import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
 import modifyFormData from "@/utils/modifyFormData";
@@ -16,34 +15,35 @@ const CreateScheduleModal = () => {
   const [createSpecialty, {isLoading}] = useCreateSpecialtyMutation();
 
   const handleFormSubmit = async (data: FieldValues) => {
-    const formData = modifyFormData(data);
-    const toastId = LoadingToast('Creating...');
+    console.log(data)
+    // const formData = modifyFormData(data);
+    // const toastId = LoadingToast('Creating...');
     
-    try{
-      const res = await createSpecialty(formData).unwrap();
-      if(res?.id){
-        SuccessToast('Specialty created Successfully', toastId);
-        setOpen(false)
-      }else{
-        ErrorToast("Something went wrong", toastId);
-      }
-    }catch(err){
-      ErrorToast("Something went wrong", toastId);
-      setOpen(false)
-    }
+    // try{
+    //   const res = await createSpecialty(formData).unwrap();
+    //   if(res?.id){
+    //     SuccessToast('Specialty created Successfully', toastId);
+    //     setOpen(false)
+    //   }else{
+    //     ErrorToast("Something went wrong", toastId);
+    //   }
+    // }catch(err){
+    //   ErrorToast("Something went wrong", toastId);
+    //   setOpen(false)
+    // }
   }
 
   return (
     <>
       <Button variant="outlined" onClick={()=>setOpen(true)}>Create Schedule</Button>
       <PHModal open={open} setOpen={setOpen} title="Create New Schedule" >
-      <PHForm onSubmit={handleFormSubmit} schema={createSpecialtiesSchema}>
+      <PHForm onSubmit={handleFormSubmit} schema={createScheduleSchema}>
         <Grid container spacing={2}>
-          <Grid item md={6}>
-            <PHInput type="text" name="title" label="Title" />
+          <Grid item md={12}>
+            <PHDatePicker name="startDate" label="Start Date"/>
           </Grid>
-          <Grid item md={6}>
-            <PHFileUploader name="file" label="Upload File" />
+          <Grid item md={12}>
+            <PHDatePicker name="endDate" label="End Date"/>
           </Grid>
         </Grid>
         <Button sx={{ mt: 1 }} type="submit" disabled={isLoading}>
