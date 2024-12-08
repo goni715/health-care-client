@@ -1,10 +1,10 @@
-import React from "react";
-import { SxProps } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TimePicker } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
+import {Dayjs} from "dayjs";
+import convertToTimeString from '@/utils/convertToTimeString';
+
 
 interface ITimePicker {
   name: string;
@@ -20,15 +20,18 @@ const PHTimePicker = ({
   return (
     <Controller
       name={name}
-      defaultValue={dayjs(new Date().toDateString())}
+      // defaultValue={dayjs(new Date().toDateString())}
       render={({ field: { onChange, value, ...field }, fieldState:{error} }) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <TimePicker
               {...field}
               label={label}
-              value={value || Date.now()}
-              onChange={(time) => onChange(time)}
+              onChange={(dateObj) =>{
+                const timeString = convertToTimeString(dateObj as Dayjs);
+                console.log({timeString})
+                onChange(timeString)
+              }}
               timezone="system"
               slotProps={{
                 textField: {

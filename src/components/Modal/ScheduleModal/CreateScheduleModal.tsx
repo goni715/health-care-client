@@ -4,7 +4,7 @@ import PHModal from "@/components/Modal/PHModal/PHModal";
 import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
 import PHDatePicker from "@/components/Forms/PHDatePicker";
-import PHDatePicker from "@/components/Forms/PHDatePicker";
+import PHTimePicker from "@/components/Forms/PHTimePicker";
 
 import { createScheduleSchema } from "@/schemas/schedule.schema";
 import { FieldValues } from "react-hook-form";
@@ -50,7 +50,7 @@ const CreateScheduleModal = () => {
             <PHDatePicker name="endDate" label="End Date"/>
           </Grid>
           <Grid item md={6}>
-            <PHDatePicker name="startTime" label="Start Time"/>
+            <PHTimePicker name="startTime" label="Start Time"/>
           </Grid>
           <Grid item md={6}>
             <PHTimePicker name="endTime" label="End Time"/>

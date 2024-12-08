@@ -90,66 +90,62 @@ const endDateSchema = z.string({
 
 
 
-// export const createScheduleSchema = z
-//   .object({
-//     startDate: startDateSchema,
-//     endDate: endDateSchema,
-//     startTime: startTimeSchema,
-//     endTime: endTimeSchema,
-//   })
-//   .superRefine((values, ctx) => {
-//     const { startDate, endDate, startTime, endTime } = values;
-  
-//     // Create Date objects using the provided startDate and endDate
-//     const StartDate = new Date(startDate);
-//     const EndDate = new Date(endDate);
-
-//     if (StartDate > EndDate) {
-//         // Set the error on the `endTime` field
-//         ctx.addIssue({
-//             path: ["startDate"],
-//             message: "Start date & EndDate must be same or StartDate is less than End Date ",
-//             code:  z.ZodIssueCode.custom,
-//         });
-        
-//         // Alternatively, you could set the error on `startTime`
-//         ctx.addIssue({
-//           path: ['endDate'],
-//           message: "Start date & EndDate must be same or EndDate is greater than startDate ",
-//           code: z.ZodIssueCode.custom,
-//         });
-//       }
-    
-//     // Create Date objects using the provided startTime and endTime
-//     const start = new Date(`2024-01-01T${startTime}:00`);
-//     const end = new Date(`2024-01-01T${endTime}:00`);
-    
-//     if (end <= start) {
-//       // Set the error on the `endTime` field
-//       ctx.addIssue({
-//           path: ["endTime"],
-//           message: "End time must be later than start time!",
-//           code:  z.ZodIssueCode.custom,
-//       });
-      
-//       // Alternatively, you could set the error on `startTime`
-//       ctx.addIssue({
-//         path: ['startTime'],
-//         message: "Start time must be before end time!",
-//         code: z.ZodIssueCode.custom,
-//       });
-//     }
-//   });
-
-
-
-
-
-
-
-
-
-export const createScheduleSchema = z.object({
+export const createScheduleSchema = z
+  .object({
     startDate: startDateSchema,
-    endDate: endDateSchema
-})
+    endDate: endDateSchema,
+    startTime: startTimeSchema,
+    endTime: endTimeSchema,
+  })
+  .superRefine((values, ctx) => {
+    const { startDate, endDate, startTime, endTime } = values;
+  
+    //Create Date objects using the provided startDate and endDate
+    const StartDate = new Date(startDate);
+    const EndDate = new Date(endDate);
+
+    if (StartDate > EndDate) {
+        // Set the error on the `endTime` field
+        ctx.addIssue({
+            path: ["startDate"],
+            message: "Start date & EndDate must be same or StartDate is less than End Date ",
+            code:  z.ZodIssueCode.custom,
+        });
+        
+        // Alternatively, you could set the error on `startTime`
+        ctx.addIssue({
+          path: ['endDate'],
+          message: "Start date & EndDate must be same or EndDate is greater than startDate ",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    
+    // Create Date objects using the provided startTime and endTime
+    const start = new Date(`2024-01-01T${startTime}:00`);
+    const end = new Date(`2024-01-01T${endTime}:00`);
+    
+    if (end <= start) {
+      // Set the error on the `endTime` field
+      ctx.addIssue({
+          path: ["endTime"],
+          message: "End time must be later than start time!",
+          code:  z.ZodIssueCode.custom,
+      });
+      
+      // Alternatively, you could set the error on `startTime`
+      ctx.addIssue({
+        path: ['startTime'],
+        message: "Start time must be before end time!",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
+
+
+
+
+
+
+
+
+
