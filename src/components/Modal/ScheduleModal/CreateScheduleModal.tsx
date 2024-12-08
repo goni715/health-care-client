@@ -4,6 +4,8 @@ import PHModal from "@/components/Modal/PHModal/PHModal";
 import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
 import PHDatePicker from "@/components/Forms/PHDatePicker";
+import PHDatePicker from "@/components/Forms/PHDatePicker";
+
 import { createScheduleSchema } from "@/schemas/schedule.schema";
 import { FieldValues } from "react-hook-form";
 import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
@@ -38,12 +40,20 @@ const CreateScheduleModal = () => {
       <Button variant="outlined" onClick={()=>setOpen(true)}>Create Schedule</Button>
       <PHModal open={open} setOpen={setOpen} title="Create New Schedule" >
       <PHForm onSubmit={handleFormSubmit} schema={createScheduleSchema}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{
+          width: '400px'
+        }}>
           <Grid item md={12}>
             <PHDatePicker name="startDate" label="Start Date"/>
           </Grid>
           <Grid item md={12}>
             <PHDatePicker name="endDate" label="End Date"/>
+          </Grid>
+          <Grid item md={6}>
+            <PHDatePicker name="startTime" label="Start Time"/>
+          </Grid>
+          <Grid item md={6}>
+            <PHTimePicker name="endTime" label="End Time"/>
           </Grid>
         </Grid>
         <Button sx={{ mt: 1 }} type="submit" disabled={isLoading}>

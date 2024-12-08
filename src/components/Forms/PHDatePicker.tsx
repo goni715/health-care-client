@@ -1,5 +1,5 @@
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -17,9 +17,9 @@ const PHDatePicker = ({name, label}: TProps) => {
     <>
      <Controller
         name={name}
-        // defaultValue={dayjs('2022-04-17')}
-        render={({ field: { onChange, value, ...field } }) => (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+        // defaultValue={dayjs(new Date().toDateString())}
+        render={({field:{onChange, value, ...field}, fieldState:{error}}) => (
+          <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DesktopDatePicker
               timezone="system" 
               disablePast
@@ -31,9 +31,12 @@ const PHDatePicker = ({name, label}: TProps) => {
               }} 
               slotProps={{
                 textField: {
-                 fullWidth: true
+                 fullWidth: true,
+                 error: !!error?.message, 
+                 helperText: error?.message
                 }
               }}
+
             />
            </LocalizationProvider>
         )}
