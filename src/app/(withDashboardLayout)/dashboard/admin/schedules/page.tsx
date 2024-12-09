@@ -13,7 +13,7 @@ import { ISchedule } from "@/types/schedule/schedule.type";
 const SchedulesPage = () => {
   const [allSchedule, setAllSchedule] = useState<any>([]);
   const { data, isLoading } = useGetAllSchedulesQuery({});
-   const schedules = data?.schedules || [];
+   const schedules = data?.schedules;
    const meta = data?.meta;
 
    
