@@ -1,3 +1,4 @@
+"use client"
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,6 +13,8 @@ import { useRouter } from 'next/navigation';
 import { logout } from "@/helper/SessionHelper";
 import avatar from '@/assets/avatar.png';
 import Image from 'next/image';
+import { useGetSingleUserQuery } from "@/redux/features/user/userApi";
+
 
 
 const settings = ['Profile', 'Change Password'];
@@ -41,6 +44,9 @@ const Header = ({handleDrawerToggle, drawerWidth}: TProps) =>{
     setAnchorElUser(null);
   };
 
+
+  const { data, isLoading } = useGetSingleUserQuery({});
+
   return (
     <>
      <AppBar
@@ -61,7 +67,7 @@ const Header = ({handleDrawerToggle, drawerWidth}: TProps) =>{
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Admin Dashboard
+            Hi, {isLoading ? '...' : data?.name}
           </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

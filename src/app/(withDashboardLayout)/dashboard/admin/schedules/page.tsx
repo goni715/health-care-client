@@ -72,7 +72,7 @@ const SchedulesPage = () => {
         ) : (
           <>
             <Box my={2}>
-              <DataGrid rows={schedules} columns={columns} />
+               <DataGrid rows={allSchedule ?? []} columns={columns} />
             </Box>
           </>
         )}
