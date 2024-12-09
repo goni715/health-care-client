@@ -1,6 +1,6 @@
 "use client";
 import CreateDoctorModal from "@/components/Modal/DoctorModal/CreateDoctorModal";
-import { useGetAllDoctorsQuery } from "@/redux/features/doctor/doctorApi";
+import { useDeleteDoctorMutation, useGetAllDoctorsQuery } from "@/redux/features/doctor/doctorApi";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -15,6 +15,7 @@ import useDebounced from '@/hooks/useDebounced';
 const DoctorsPage = () => {
   const query: Record<string, unknown> = {};
   const [searchTerm, setSearchTerm] = useState<string>('');
+
  
   const debouncedValue = useDebounced({
     searchQuery: searchTerm,
@@ -25,24 +26,24 @@ const DoctorsPage = () => {
     query['searchTerm']=debouncedValue
   }
   const { data, isLoading } = useGetAllDoctorsQuery({...query});
+  const [ deleteDoctor ] = useDeleteDoctorMutation()
 
-  //const [deleteSpecialty] = useDeleteSpecialtyMutation()
 
 
   const handleDelete = async (id:string) => {
     const toastId = LoadingToast('Deleting...');
     
-    // try{
-    //   const res = await deleteSpecialty(id).unwrap();
-    //   console.log(res)
-    //   if(res?.id){
-    //     SuccessToast('Specialty deleted Successfully', toastId);
-    //   }else{
-    //     ErrorToast("Something went wrong", toastId);
-    //   }
-    // }catch(err){
-    //   ErrorToast("Something went wrong", toastId);
-    // }
+    try{
+      const res = await deleteDoctor(id).unwrap();
+      console.log(res)
+      if(res?.id){
+        SuccessToast('Doctor deleted Successfully', toastId);
+      }else{
+        ErrorToast("Something went wrong", toastId);
+      }
+    }catch(err){
+      ErrorToast("Something went wrong", toastId);
+    }
   }
 
 
