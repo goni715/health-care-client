@@ -8,6 +8,12 @@ const scheduleApi = baseApi.injectEndpoints({
         method: "GET",
         params:arg
       }),
+      transformResponse: (response: [], meta: IMeta) => {
+        return {
+          schedules: response,
+          meta,
+        };
+      },
       providesTags: ["Schedules"],
     }),
     createSchedule: build.mutation({
