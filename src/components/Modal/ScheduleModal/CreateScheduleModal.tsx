@@ -5,34 +5,31 @@ import { Button, Grid } from "@mui/material";
 import PHForm from "@/components/Forms/PHForm";
 import PHDatePicker from "@/components/Forms/PHDatePicker";
 import PHTimePicker from "@/components/Forms/PHTimePicker";
-
 import { createScheduleSchema } from "@/schemas/schedule.schema";
 import { FieldValues } from "react-hook-form";
-import { useCreateSpecialtyMutation } from "@/redux/features/specialties/specialtiesApi";
-import modifyFormData from "@/utils/modifyFormData";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+import { useCreateScheduleMutation } from "@/redux/features/schedule/scheduleApi";
 
 const CreateScheduleModal = () => {
   const [open, setOpen] = useState(false);
-  const [createSpecialty, {isLoading}] = useCreateSpecialtyMutation();
+  const [createSchedule, {isLoading}] = useCreateScheduleMutation();
 
   const handleFormSubmit = async (data: FieldValues) => {
-    console.log(data)
-    // const formData = modifyFormData(data);
-    // const toastId = LoadingToast('Creating...');
+    const toastId = LoadingToast('Creating...');
+    try{
+      const res = await createSchedule(data).unwrap();
+      if(res?.count > 0){
+        SuccessToast('Schedule created Successfully', toastId);
+        setOpen(false)
+      }else{
+        ErrorToast("Something went wrong", toastId);
+      }
+    }catch(err){
+      ErrorToast("Something went wrong", toastId);
+      setOpen(false)
+    } 
     
-    // try{
-    //   const res = await createSpecialty(formData).unwrap();
-    //   if(res?.id){
-    //     SuccessToast('Specialty created Successfully', toastId);
-    //     setOpen(false)
-    //   }else{
-    //     ErrorToast("Something went wrong", toastId);
-    //   }
-    // }catch(err){
-    //   ErrorToast("Something went wrong", toastId);
-    //   setOpen(false)
-    // }
+   
   }
 
   return (

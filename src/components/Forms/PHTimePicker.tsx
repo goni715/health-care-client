@@ -29,7 +29,6 @@ const PHTimePicker = ({
               label={label}
               onChange={(dateObj) =>{
                 const timeString = convertToTimeString(dateObj as Dayjs);
-                console.log({timeString})
                 onChange(timeString)
               }}
               timezone="system"
