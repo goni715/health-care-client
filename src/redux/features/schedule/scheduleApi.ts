@@ -4,11 +4,11 @@ const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllSchedules: build.query({
       query: (arg: Record<string, any>) => ({
-        url: "/doctor/get-all-doctors",
+        url: "/schedule/get-all-schedules",
         method: "GET",
         params:arg
       }),
-      providesTags: ["Doctors"],
+      providesTags: ["Schedules"],
     }),
     createSchedule: build.mutation({
       query: (data) => ({
@@ -16,9 +16,9 @@ const scheduleApi = baseApi.injectEndpoints({
         method: 'POST',
         data:data,
       }),
-      //invalidatesTags: [""]
+      invalidatesTags: ["Schedules"]
     })
   }),
 })
 
-export const { useCreateScheduleMutation } = scheduleApi;
+export const { useGetAllSchedulesQuery, useCreateScheduleMutation } = scheduleApi;
