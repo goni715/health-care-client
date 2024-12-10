@@ -49,5 +49,10 @@ export type IGenericErrorMessage = {
   message: string;
 };
 
-
+export type IAuthUser = {
+  id: string;
+  iat: number;
+  email: string;
+  role: TUserRole;
+};
 

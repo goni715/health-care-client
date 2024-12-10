@@ -1,6 +1,9 @@
 import axios from "axios";
 import { getToken } from "./SessionHelper";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types/globals/globalsType";
+import { logout, setToken } from "@/helper/SessionHelper";
+import { getNewAccessToken } from "@/services/auth.service";
+
 
 
 const axiosInstance = axios.create();
@@ -32,16 +35,32 @@ axiosInstance.interceptors.response.use(
         meta: response?.data?.meta
     }
     return responseObject;
-  }, function (error) {
+  }, async function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    const responseObject : IGenericErrorResponse = {
-        statusCode: error?.response?.data?.statusCode || 500,
+    if(error?.status === 401){
+     
+      const config = error.config;
+      const res = await getNewAccessToken();
+      if(res?.data?.accessToken){
+        config.headers["Authorization"] = res?.data?.accessToken;
+        setToken(res?.data?.accessToken)
+      }else{
+         logout()
+      }
+    }
+    else{
+       const responseObject : IGenericErrorResponse = {
+        statusCode: error?.response?.status || 500,
         message: error?.response?.data?.message || "Something Weng Wrong",
         errorMessages: error?.response?.data?.message
+      }
+      //return Promise.reject(error);
+       return responseObject;
+
     }
-     //return Promise.reject();
-     return responseObject;
+    
+   
   });
 
 export default axiosInstance;

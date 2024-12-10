@@ -5,15 +5,10 @@ import Link from "next/link";
 import generateMenuItems from "@/utils/generateMenuItems";
 import SidebarItem from "./SidebarItem";
 import { getUserInfo } from "@/helper/SessionHelper";
-import { TUserRole } from "@/types/globals/globalsType";
+import { TUserRole, IAuthUser } from "@/types/globals/globalsType";
 import { useEffect, useState } from "react";
 
-type IAuthUser = {
-  id: string;
-  iat: number;
-  email: string;
-  role: TUserRole;
-};
+
 
 const Sidebar = () => {
   const [userRole, setUserRole] = useState("");

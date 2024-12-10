@@ -18,10 +18,13 @@ import { LoginSchema } from "@/schemas/auth.schema";
 
 
 
+
 const LoginPage = () => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
     const router = useRouter();
+ 
+  
 
 
     const onSubmit = async (data: FieldValues) =>{
@@ -47,6 +50,8 @@ const LoginPage = () => {
          setLoading(false)
       } 
     } 
+
+
 
     return (
         <>
