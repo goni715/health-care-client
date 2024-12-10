@@ -10,6 +10,15 @@ const doctorApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Doctors"],
     }),
+    getSingleDoctor: build.query({
+      query: (id) => ({
+        url: `/doctor/get-single-doctor/${id}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, arg) => [
+        {type: "Doctor", id:arg}, //Dynamic Tag
+      ],
+    }),
     createDoctor: build.mutation({
       query: (data) => ({
         url: `/user/create-doctor`,
@@ -29,4 +38,4 @@ const doctorApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetAllDoctorsQuery, useCreateDoctorMutation, useDeleteDoctorMutation } = doctorApi;
+export const { useGetAllDoctorsQuery, useGetSingleDoctorQuery, useCreateDoctorMutation, useDeleteDoctorMutation } = doctorApi;

@@ -1,10 +1,23 @@
+"use client"
+import { useGetSingleDoctorQuery } from "@/redux/features/doctor/doctorApi";
 
 
 
-const DoctorEditPage = () => {
+const DoctorEditPage = ({ params }) => {
+  const { doctorId } = params;
+  const { data, isLoading } = useGetSingleDoctorQuery(doctorId);
+  console.log(data)
+
     return (
         <>
-          <h1> Doctor Edit Page </h1>
+          {
+            isLoading ? (
+              <h1>Loading...</h1>
+            ) : (
+              <h1> Doctor Edit Page {doctorId} </h1>
+            )
+          }
+         
         </>
     )
 }
