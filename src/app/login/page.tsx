@@ -86,7 +86,7 @@ const LoginPage = () => {
                     <PHForm onSubmit={onSubmit} schema={LoginSchema}>
                     <Grid container spacing={2} mt={1}>                    
                        <Grid item xs={12}>
-                          <PHInput name="email" label="Email" type="email"/>
+                          <PHInput name="email" label="Email" type="text"/>
                        </Grid>
                        <Grid item xs={12}>
                           <PHInput name="password" label="Password" type="password"/>
