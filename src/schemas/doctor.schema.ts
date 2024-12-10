@@ -32,8 +32,11 @@ export const createDoctorSchema = z.object({
         .refine(capitalizeValidator, {
           message: "Name must be in capitalize format",
         })
-        .refine((value) => /^[A-Za-z\s]+$/.test(value), {
-          message: "Name must only contain alphabets", //"Name must only contain letters
+        //.refine((value) => /^[A-Za-z\s]+$/.test(value), {
+          //message: "Name must only contain alphabets", //"Name must only contain letters
+        //}),
+        .refine((value) => /^[A-Za-z\s.]+$/.test(value), {
+          message: "Name must only contain alphabets and dot",
         }),
       contactNumber: z
         .string({
@@ -124,8 +127,11 @@ export const updateDoctorSchema = z.object({
       .refine(capitalizeValidator, {
         message: "Name must be in capitalize format",
       })
-      .refine((value) => /^[A-Za-z\s]+$/.test(value), {
-        message: "Name must only contain alphabets", //"Name must only contain letters
+      //.refine((value) => /^[A-Za-z\s]+$/.test(value), {
+       // message: "Name must only contain alphabets", //"Name must only contain letters
+      //}),
+      .refine((value) => /^[A-Za-z\s.]+$/.test(value), {
+        message: "Name must only contain alphabets and dot",
       }),
     contactNumber: z
       .string({
