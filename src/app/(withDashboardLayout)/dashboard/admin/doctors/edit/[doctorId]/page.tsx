@@ -16,7 +16,7 @@ const DoctorEditPage = ({ params }) => {
               <h1>Loading...</h1>
             ) : (
               <> 
-                <h1> Update Doctor} </h1>
+                <h1> Update Doctor </h1>
                  {data && (
                     <UpdateDoctor doctor={data}/>
                   )

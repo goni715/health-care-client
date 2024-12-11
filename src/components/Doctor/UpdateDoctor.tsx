@@ -4,7 +4,6 @@ import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
 import { updateDoctorSchema } from "@/schemas/doctor.schema";
 import { FieldValues } from "react-hook-form";
-import modifyFormData from "@/utils/modifyFormData";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import PHSelect from "@/components/Forms/PHSelect";
 import { useCreateDoctorMutation } from "@/redux/features/doctor/doctorApi";
@@ -17,22 +16,23 @@ type TProps = {
 
 const UpdateDoctor = ({ doctor } : TProps) => {
   const [createDoctor, {isLoading}] = useCreateDoctorMutation();
-  const { name, contactNumber, address, registrationNumber, experience, gender, appointmentFee, qualification, currentWorkingPlace, designation } = doctor || {};
+  const {id, name, contactNumber, address, registrationNumber, experience, gender, appointmentFee, qualification, currentWorkingPlace, designation } = doctor || {};
 
   const defaultValues = {
-    name,
-    contactNumber,
-    address,
-    registrationNumber,
-    experience: String(experience),
-    gender,
-    appointmentFee: String(appointmentFee),
-    qualification,
-    currentWorkingPlace,
-    designation
+    // name,
+    // contactNumber,
+    // address,
+    // registrationNumber,
+    // experience: String(experience),
+    // gender,
+    // appointmentFee: String(appointmentFee),
+    // qualification,
+    // currentWorkingPlace,
+    // designation
   }
 
   const handleFormSubmit = async (data: FieldValues) => {
+    console.log(data)
     
     // const values = {
     //   password:data.password,
@@ -62,6 +62,7 @@ const UpdateDoctor = ({ doctor } : TProps) => {
 
   return (
     <>
+     
 
       <PHForm onSubmit={handleFormSubmit} schema={updateDoctorSchema} defaultValues={defaultValues}>
       <Grid container spacing={2} sx={{ my: 5 }}>
