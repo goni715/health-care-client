@@ -9,28 +9,37 @@ import { createScheduleSchema } from "@/schemas/schedule.schema";
 import { FieldValues } from "react-hook-form";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import { useCreateScheduleMutation } from "@/redux/features/schedule/scheduleApi";
+import dayjs, { Dayjs } from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
 
 const CreateDocScheduleModal = () => {
   const [open, setOpen] = useState(false);
   const [createSchedule, {isLoading}] = useCreateScheduleMutation();
+  const [selectedDate, setSelectedDate] = useState(dayjs(new Date()).toISOString());
 
   const handleFormSubmit = async (data: FieldValues) => {
-    const toastId = LoadingToast('Creating...');
-    try{
-      const res = await createSchedule(data).unwrap();
-      if(res?.count > 0){
-        SuccessToast('Schedule created Successfully', toastId);
-        setOpen(false)
-      }else{
-        ErrorToast("Something went wrong", toastId);
-      }
-    }catch(err){
-      ErrorToast("Something went wrong", toastId);
-      setOpen(false)
-    } 
+    // const toastId = LoadingToast('Creating...');
+    // try{
+    //   const res = await createSchedule(data).unwrap();
+    //   if(res?.count > 0){
+    //     SuccessToast('Schedule created Successfully', toastId);
+    //     setOpen(false)
+    //   }else{
+    //     ErrorToast("Something went wrong", toastId);
+    //   }
+    // }catch(err){
+    //   ErrorToast("Something went wrong", toastId);
+    //   setOpen(false)
+    // } 
     
    
   }
+
+  console.log(selectedDate)
 
   return (
     <>
@@ -41,16 +50,18 @@ const CreateDocScheduleModal = () => {
           width: '400px'
         }}>
           <Grid item md={12}>
-            <PHDatePicker name="startDate" label="Start Date"/>
-          </Grid>
-          <Grid item md={12}>
-            <PHDatePicker name="endDate" label="End Date"/>
-          </Grid>
-          <Grid item md={6}>
-            <PHTimePicker name="startTime" label="Start Time"/>
-          </Grid>
-          <Grid item md={6}>
-            <PHTimePicker name="endTime" label="End Time"/>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Controlled picker"
+          value={dayjs(selectedDate)}
+          onChange={(newValue) => setSelectedDate(dayjs(newValue).toISOString())}
+          slotProps={{
+            textField: {
+             fullWidth: true,
+            }
+          }}
+        />
+    </LocalizationProvider>
           </Grid>
         </Grid>
         <Button sx={{ mt: 1 }} type="submit" disabled={isLoading}>
