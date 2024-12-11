@@ -35,6 +35,7 @@ const doctorApi = baseApi.injectEndpoints({
         data:data,
       }),
       invalidatesTags: (result, error, { id }) => [
+        "Doctors",
         { type: 'Doctor', id }
       ]
     }),
@@ -48,4 +49,4 @@ const doctorApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetAllDoctorsQuery, useGetSingleDoctorQuery, useCreateDoctorMutation, useDeleteDoctorMutation } = doctorApi;
+export const { useGetAllDoctorsQuery, useGetSingleDoctorQuery, useCreateDoctorMutation, useUpdateDoctorMutation, useDeleteDoctorMutation } = doctorApi;

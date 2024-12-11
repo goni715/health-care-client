@@ -6,8 +6,10 @@ import { updateDoctorSchema } from "@/schemas/doctor.schema";
 import { FieldValues } from "react-hook-form";
 import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
 import PHSelect from "@/components/Forms/PHSelect";
-import { useCreateDoctorMutation } from "@/redux/features/doctor/doctorApi";
+import { useUpdateDoctorMutation } from "@/redux/features/doctor/doctorApi";
 import { IDoctor } from "@/types/doctor/doctor.type";
+import { useRouter } from "next/navigation";
+
 
 
 type TProps = {
@@ -15,49 +17,46 @@ type TProps = {
 }
 
 const UpdateDoctor = ({ doctor } : TProps) => {
-  const [createDoctor, {isLoading}] = useCreateDoctorMutation();
+  const [updateDoctor, {isLoading}] = useUpdateDoctorMutation();
   const {id, name, contactNumber, address, registrationNumber, experience, gender, appointmentFee, qualification, currentWorkingPlace, designation } = doctor || {};
+  const router = useRouter();
 
   const defaultValues = {
-    // name,
-    // contactNumber,
-    // address,
-    // registrationNumber,
-    // experience: String(experience),
-    // gender,
-    // appointmentFee: String(appointmentFee),
-    // qualification,
-    // currentWorkingPlace,
-    // designation
+    name,
+    contactNumber,
+    address,
+    registrationNumber,
+    experience: String(experience),
+    gender,
+    appointmentFee: String(appointmentFee),
+    qualification,
+    currentWorkingPlace,
+    designation
   }
 
   const handleFormSubmit = async (data: FieldValues) => {
-    console.log(data)
-    
-    // const values = {
-    //   password:data.password,
-    //   doctorData: {
-    //     ...data.doctorData,
-    //     appointmentFee: Number(data.doctorData.appointmentFee),
-    //     experience: Number(data.doctorData.experience)
-    //   }
-     
-    // }
 
-    // const formData = modifyFormData(values);
-    // const toastId = LoadingToast('Creating...');
-    // try{
-    //   const res = await createDoctor(formData).unwrap();
-    //   if(res?.id){
-    //     SuccessToast("Doctor created successfully", toastId);
-    //   }
-    //   else{
-    //     ErrorToast('Something Went Wrong', toastId)
-    //   }
-    // }
-    // catch(err){
-    //   ErrorToast('Something Went Wrong', toastId)
-    // }
+    const toastId = LoadingToast('Updating...');
+    try{
+      const res = await updateDoctor({
+        data: {
+          ...data,
+          experience: Number(data.experience),
+          appointmentFee: Number(data.appointmentFee)
+        },
+        id
+      }).unwrap();
+      if(res?.id){
+        SuccessToast("Doctor updated successfully", toastId);
+        router.push('/dashboard/admin/doctors')
+      }
+      else{
+        ErrorToast('Something Went Wrong', toastId)
+      }
+    }
+    catch(err){
+      ErrorToast('Something Went Wrong', toastId)
+    }
  }
 
   return (

@@ -110,13 +110,6 @@ export const createDoctorSchema = z.object({
 
   
 export const updateDoctorSchema = z.object({
-    email: z
-      .string({
-        required_error: "Email is required",
-      })
-      .min(1, { message: "Email is required" })
-      .trim()
-      .email({ message: "Invalid email address" }),
     name: z
       .string({
         required_error: "Name is required",
