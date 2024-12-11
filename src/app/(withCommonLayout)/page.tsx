@@ -7,11 +7,12 @@ import Stats from "@/components/ui/HomePage/Stats/Stats";
 
 
 const HomePage = () => {
+ 
   return (
     <>
        <HeroSection/>
        <Specialist/>
-       <TopRatedDoctors/>
+       <TopRatedDoctors/> 
        <WhyUs/>
        <HowItWorks/>
        <Stats/>

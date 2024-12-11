@@ -1,82 +1,95 @@
-"use client";
-import CreateScheduleModal from "@/components/Modal/ScheduleModal/CreateScheduleModal";
+"use client"
+import { Table } from "antd";
+import moment from "moment";
+import { Stack, IconButton } from "@mui/material";
 import { useGetAllSchedulesQuery } from "@/redux/features/schedule/scheduleApi";
-import { Box, Stack, IconButton  } from "@mui/material";
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import CreateScheduleModal from './../../../../../components/Modal/ScheduleModal/CreateScheduleModal';
 import DeleteIcon from '@mui/icons-material/Delete';
-import dayjs from 'dayjs';
-import { useState, useEffect } from 'react';
-import { ISchedule } from "@/types/schedule/schedule.type";
+
 
 
 
 const SchedulesPage = () => {
-  const [allSchedule, setAllSchedule] = useState<any>([]);
   const { data, isLoading } = useGetAllSchedulesQuery({});
-   const schedules = data?.schedules;
-   const meta = data?.meta;
-
-   
-   useEffect(() => {
-    if (schedules?.length) {
-      const updateData = schedules.map((schedule: ISchedule, index: number) => {
-        return {
-          sl: index + 1,
-          id: schedule.id,
-          startTime: dayjs(schedule.startDate).format("hh:mm a"),
-          endTime: dayjs(schedule.endDate).format("hh:mm a"),
-        };
-      });
-      setAllSchedule(updateData);
-    }
-  }, [schedules]);
+  const schedules = data?.schedules || [];
 
 
 
-  const columns: GridColDef[] = [
-   // { field: 'sl', headerName: 'SL' },
-    //{ field: 'startDate', headerName: 'Date', flex: 1 },
-    //{ field: 'startTime', headerName: 'Start Time', flex: 1 },
-    //{ field: 'endTime', headerName: 'End Time', flex: 1 },
+  const columns = [
     {
-       field: 'action',
-       headerName: 'Action',
-       flex: 1,
-       headerAlign: 'center',
-       align: 'center',
-       renderCell: ({ row }) => {
-          return (
-             <IconButton aria-label='delete'>
-                <DeleteIcon sx={{ color: 'red' }} />
-             </IconButton>
-          );
-       },
+      title: "S.L",
+      dataIndex: "key",
     },
- ];
+    {
+      title: "Start Date",
+      dataIndex: "startDateTime",
+      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDateTime",
+      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+    },
+    {
+      title: "Start Time",
+      dataIndex: "startDateTime",
+      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+    },
+    {
+      title: "End Time",
+      dataIndex: "endDateTime",
+      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+    },
+    {
+      title: "End Time",
+      dataIndex: "endDateTime",
+      render: (val) => <IconButton aria-label='delete'>
+      <DeleteIcon sx={{ color: 'red' }} />
+   </IconButton>
+    },
+  ];
 
+  const tableData = [];
+
+  if (!isLoading && schedules?.length > 0) {
+    for (let i = 0; i < schedules.length; i++) {
+      tableData.push({
+        key: Number(i + 1),
+        ...schedules[i]
+      });
+    }
+  }
 
   return (
     <>
-      <Box>
-        <Stack
+      <div>
+      <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
           <CreateScheduleModal />
         </Stack>
+
         {isLoading ? (
           <>
-            <h1>Loading...</h1>
+            <h1>Loading </h1>
           </>
         ) : (
           <>
-            <Box my={2}>
-               <DataGrid rows={allSchedule ?? []} columns={columns} />
-            </Box>
+               <div className="px-2 shadow-md rounded-md">
+            
+              <div className="w-auto overflow-x-auto">
+                <Table
+                  scroll={{ x: true, y: 400 }}
+                  columns={columns}
+                  dataSource={tableData}
+                />
+              </div>
+            </div>
           </>
         )}
-      </Box>
+      </div>
     </>
   );
 };
