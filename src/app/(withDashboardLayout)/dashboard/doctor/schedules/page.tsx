@@ -1,10 +1,96 @@
+"use client"
+import { Table } from "antd";
+import moment from "moment";
+import { Stack, IconButton } from "@mui/material";
+import { useGetAllSchedulesQuery } from "@/redux/features/schedule/scheduleApi";
+import CreateDocScheduleModal from './../../../../../components/Modal/ScheduleModal/CreateDocScheduleModal';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
+
 
 const DoctorSchedulesPage = () => {
-    return (
-        <>
-            <h1>Doctor Schedules Page</h1>
-        </>
-    );
+  const { data, isLoading } = useGetAllSchedulesQuery({});
+  const schedules = data?.schedules || [];
+
+
+
+  const columns = [
+    {
+      title: "S.L",
+      dataIndex: "key",
+    },
+    {
+      title: "Start Date",
+      dataIndex: "startDateTime",
+      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDateTime",
+      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+    },
+    {
+      title: "Start Time",
+      dataIndex: "startDateTime",
+      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+    },
+    {
+      title: "End Time",
+      dataIndex: "endDateTime",
+      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+    },
+    {
+      title: "End Time",
+      dataIndex: "endDateTime",
+      render: (val) => <IconButton aria-label='delete'>
+      <DeleteIcon sx={{ color: 'red' }} />
+   </IconButton>
+    },
+  ];
+
+  let tableData: any[] = [];
+
+  if (!isLoading && schedules?.length > 0) {
+
+    tableData = schedules?.map((item: Record<string, unknown>, i)=> ({
+      key: Number(i + 1),
+      ...item
+    }))
+  }
+
+  return (
+    <>
+      <div>
+      <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <CreateDocScheduleModal />
+        </Stack>
+
+        {isLoading ? (
+          <>
+            <h1>Loading... </h1>
+          </>
+        ) : (
+          <>
+               <div className="px-2 shadow-md rounded-md">
+            
+              <div className="w-auto overflow-x-auto">
+                <Table
+                  scroll={{ x: true, y: 400 }}
+                  columns={columns}
+                  dataSource={tableData}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default DoctorSchedulesPage;

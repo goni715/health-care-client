@@ -49,15 +49,14 @@ const SchedulesPage = () => {
     },
   ];
 
-  const tableData = [];
+  let tableData = [];
 
   if (!isLoading && schedules?.length > 0) {
-    for (let i = 0; i < schedules.length; i++) {
-      tableData.push({
-        key: Number(i + 1),
-        ...schedules[i]
-      });
-    }
+
+    tableData = schedules?.map((item: Record<string, unknown>, i)=> ({
+      key: Number(i + 1),
+      ...item
+    }))
   }
 
   return (
@@ -73,7 +72,7 @@ const SchedulesPage = () => {
 
         {isLoading ? (
           <>
-            <h1>Loading </h1>
+            <h1>Loading... </h1>
           </>
         ) : (
           <>
