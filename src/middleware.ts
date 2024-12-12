@@ -24,7 +24,11 @@ export function middleware(request: NextRequest) {
  
   //if there is no accessToken
   if(!accessToken){
-    return NextResponse.redirect(new URL('/login', request.url))
+    if (AuthRoutes.includes(pathname)) {
+      return NextResponse.next();
+   } else {
+      return NextResponse.redirect(new URL('/login', request.url));
+   }
   }
 
   if(accessToken && commonPrivateRoutes.includes(pathname)){
@@ -63,5 +67,5 @@ export function middleware(request: NextRequest) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/dashboard/:path*',
+  matcher: ['/login', '/register', '/dashboard/:path*', '/doctors/:page*'],
 }
