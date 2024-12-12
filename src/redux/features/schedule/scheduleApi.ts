@@ -1,4 +1,6 @@
-import { baseApi } from "../api/baseApi"
+import { baseApi } from "../api/baseApi";
+import { TMeta } from "@/types/globals/globalsType";
+
 
 const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -8,7 +10,7 @@ const scheduleApi = baseApi.injectEndpoints({
         method: "GET",
         params:arg
       }),
-      transformResponse: (response: [], meta: IMeta) => {
+      transformResponse: (response: [], meta: TMeta) => {
         return {
           schedules: response,
           meta,
