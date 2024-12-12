@@ -1,7 +1,9 @@
 "use client";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+
+
 
 
 const Navbar = () => {
@@ -9,6 +11,12 @@ const Navbar = () => {
     ssr: false,
     loading: () =>  <button className="logout-button"> logout</button>,
   })
+
+  const DashboardLink = dynamic(() => import('@/components/shared/Navbar/DashboardLink'), { 
+    ssr: false,
+    //loading: () =>  <button className="logout-button"> logout</button>,
+  })
+
 
 
 
@@ -37,6 +45,8 @@ const Navbar = () => {
               <Typography>Medicine</Typography>
               <Typography>Diagnostics</Typography>
               <Typography>NGOs</Typography>
+              <DashboardLink/>
+             
             </Stack>
            <AuthButton/>
           

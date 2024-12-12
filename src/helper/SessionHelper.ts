@@ -1,4 +1,6 @@
 import { jwtDecode } from "jwt-decode";
+import deleteCookies from "@/services/actions/deleteCookies";
+
 
 const authKey = 'accessToken';
 
@@ -40,6 +42,7 @@ class SessionHelper {
   }
 
   logout() {
+    deleteCookies(["accessToken", "refreshToken"])
     localStorage.clear();
     window.location.href = "/";
   }

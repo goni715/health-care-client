@@ -2,6 +2,8 @@ import { IDoctor } from "@/types/doctor/doctor.type";
 import { Box, Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Link from 'next/link';
+import doctor_img from '@/assets/doctor-image1.png';
 
 const TopRatedDoctors = async () => {
   const res = await fetch(`${process.env.BACKEND_API_URL}/doctor/get-all-doctors?page=1&limit=3`, {
@@ -52,7 +54,7 @@ const TopRatedDoctors = async () => {
               <Grid item key={doctor.id} md={4}>
                 <Card>
                   <Box>
-                    {/* <Image src={doctor?.profilePhoto} width={500} height={100} alt="doctor"/> */}
+                    <Image src={doctor?.profilePhoto || doctor_img} width={500} height={100} alt="doctor"/>
                   </Box>
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
@@ -85,7 +87,7 @@ const TopRatedDoctors = async () => {
             textAlign: 'center',
             marginTop: "20px"
           }}> 
-            <Button variant="outlined">View All </Button> 
+            <Button variant="outlined" component={Link} href="/doctors">View All </Button> 
           </Box>
         </Container>
       </Box>

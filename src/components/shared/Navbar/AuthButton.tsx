@@ -1,6 +1,5 @@
 "use client";
 import { isLoggedIn, logout } from "@/helper/SessionHelper";
-import deleteCookies from "@/services/actions/deleteCookies";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
@@ -11,7 +10,6 @@ const AuthButton = () => {
    const router = useRouter();
 
    const handleLogout = () => {
-     deleteCookies(['accessToken', 'refreshToken']);
      logout();
      router.refresh()
    }

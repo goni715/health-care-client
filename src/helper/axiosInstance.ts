@@ -4,7 +4,6 @@ import { IGenericErrorResponse, ResponseSuccessType } from "@/types/globals/glob
 import { logout, setToken } from "@/helper/SessionHelper";
 import { getNewAccessToken } from "@/services/auth.service";
 import setAccessToken from "@/services/actions/setAccessToken";
-import deleteCookies from "@/services/actions/deleteCookies";
 
 
 
@@ -49,7 +48,6 @@ axiosInstance.interceptors.response.use(
         setToken(res?.data?.accessToken) //set accessToken into localStorage
         setAccessToken(res?.data?.accessToken);//set accessToken into cookies
       }else{
-        deleteCookies(["accessToken", "refreshToken"])
          logout()
       }
     }

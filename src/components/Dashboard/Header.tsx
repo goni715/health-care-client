@@ -14,7 +14,6 @@ import { logout } from "@/helper/SessionHelper";
 import avatar from '@/assets/avatar.png';
 import Image from 'next/image';
 import { useGetSingleUserQuery } from "@/redux/features/user/userApi";
-import deleteCookies from "@/services/actions/deleteCookies";
 
 
 
@@ -31,7 +30,6 @@ const Header = ({handleDrawerToggle, drawerWidth}: TProps) =>{
   const router = useRouter();
 
   const handleLogout = () => {
-    deleteCookies(["accessToken", "refreshToken"])
     logout();
     router.push('/')
   }
