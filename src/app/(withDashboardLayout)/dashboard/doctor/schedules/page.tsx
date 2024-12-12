@@ -2,15 +2,15 @@
 import { Table } from "antd";
 import moment from "moment";
 import { Stack, IconButton } from "@mui/material";
-import { useGetAllSchedulesQuery } from "@/redux/features/schedule/scheduleApi";
 import CreateDocScheduleModal from './../../../../../components/Modal/ScheduleModal/CreateDocScheduleModal';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useGetDoctorSchedulesQuery } from "@/redux/features/doctorSchedule/doctorScheduleApi";
 
 
 
 
 const DoctorSchedulesPage = () => {
-  const { data, isLoading } = useGetAllSchedulesQuery({});
+  const { data, isLoading } = useGetDoctorSchedulesQuery({});
   const schedules = data?.schedules || [];
 
 
@@ -22,31 +22,31 @@ const DoctorSchedulesPage = () => {
     },
     {
       title: "Start Date",
-      dataIndex: "startDateTime",
-      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+      dataIndex: "schedule",
+      render: ({startDateTime}:any) =>  <span>{moment(startDateTime).format("YYYY-MM-DD")}</span>,
     },
     {
       title: "End Date",
-      dataIndex: "endDateTime",
-      render: (val) => <span>{moment(val).format("YYYY-MM-DD")}</span>,
+      dataIndex: "schedule",
+      render: ({endDateTime}:any) => <span>{moment(endDateTime).format("YYYY-MM-DD")}</span>,
     },
     {
       title: "Start Time",
-      dataIndex: "startDateTime",
-      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+      dataIndex: "schedule",
+      render: ({startDateTime}:any) => <span>{moment(startDateTime).format("h:mm a")}</span>,
     },
     {
       title: "End Time",
-      dataIndex: "endDateTime",
-      render: (val) => <span>{moment(val).format("h:mm a")}</span>,
+      dataIndex: "schedule",
+      render: ({endDateTime}:any) => <span>{moment(endDateTime).format("h:mm a")}</span>,
     },
     {
-      title: "End Time",
+      title: "Action",
       dataIndex: "endDateTime",
       render: (val) => <IconButton aria-label='delete'>
       <DeleteIcon sx={{ color: 'red' }} />
    </IconButton>
-    },
+    }
   ];
 
   let tableData: any[] = [];

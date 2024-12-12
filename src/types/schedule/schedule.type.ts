@@ -1,6 +1,14 @@
 export type ISchedule = {
-    [x: string]: any;
-    id?: string;
-    startDate: string;
-    endDate: string;
+    id: string;
+    startDateTime: string;
+    endDateTime: string;
  };
+
+ export interface IDocSchedule {
+    doctorId: string
+    scheduleId: string
+    isBooked: boolean
+    appointmentId: any
+    schedule: ISchedule
+    appointment: any
+  }
