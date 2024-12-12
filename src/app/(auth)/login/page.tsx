@@ -38,7 +38,7 @@ const LoginPage = () => {
             SuccessToast('Login Success', toastId);
             setToken(res?.data?.accessToken);
             setLoading(false)
-            router.push('/dashboard')
+            //router.push('/dashboard')
             //window.location.href="/";
          }else{         
             DismissToast();

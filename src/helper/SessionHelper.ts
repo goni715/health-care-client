@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-const authKey = 'token';
+const authKey = 'accessToken';
 
 
 

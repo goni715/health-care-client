@@ -3,6 +3,7 @@ import { getToken } from "./SessionHelper";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types/globals/globalsType";
 import { logout, setToken } from "@/helper/SessionHelper";
 import { getNewAccessToken } from "@/services/auth.service";
+import setAccessToken from "@/services/actions/setAccessToken";
 
 
 
@@ -44,7 +45,8 @@ axiosInstance.interceptors.response.use(
       const res = await getNewAccessToken();
       if(res?.data?.accessToken){
         config.headers["Authorization"] = res?.data?.accessToken;
-        setToken(res?.data?.accessToken)
+        setToken(res?.data?.accessToken) //set accessToken into localStorage
+        setAccessToken(res?.data?.accessToken);//set accessToken into cookies
       }else{
          logout()
       }

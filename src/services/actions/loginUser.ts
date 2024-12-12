@@ -1,6 +1,5 @@
-//"use server"
-
 import { FieldValues } from "react-hook-form";
+import setAccessToken from './setAccessToken';
 
 
 const loginUser = async (data: FieldValues) => {
@@ -14,6 +13,10 @@ const loginUser = async (data: FieldValues) => {
         credentials: "include"
     })
     const result = await res.json();
+
+    if(result?.data?.accessToken){
+        setAccessToken(result?.data?.accessToken, '/dashboard');
+    }
     return result;
 };
 
