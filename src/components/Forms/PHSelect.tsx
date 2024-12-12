@@ -30,7 +30,7 @@ const PHSelect = ({label, name, disabled=false}: TInputProps) => {
         labelId="demo-select-small-label"
         id="demo-select-small"
         // value={age}
-        label="Age"
+        label={label}
         {...field}
       >
         
