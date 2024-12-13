@@ -25,12 +25,12 @@ const ScrollCategory = ({ specialties }: { specialties: string }) => {
             scrollButtons='auto'
             aria-label='scrollable auto tabs example'
          >
-            {/* <Tab
+            <Tab
                   key="all"
                   label="All"
                   value="all"
                   sx={{ fontWeight: 600 }}
-            /> */}
+            /> 
 
             {data?.map((specialty: any) => (
                <Tab

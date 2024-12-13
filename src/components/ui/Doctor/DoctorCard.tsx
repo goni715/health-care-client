@@ -1,11 +1,28 @@
-import { Doctor } from '@/types/doctor';
+"use client"
 import { Box, Button, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { IDoctor } from "@/types/doctor/doctor.type";
+import useUserInfo from '@/hooks/useUserInfo';
+import { useRouter } from 'next/navigation'
 
-const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
+
+const DoctorCard = ({ doctor }: { doctor: IDoctor }) => {
    const placeholder =
       'https://static.vecteezy.com/system/resources/thumbnails/026/489/224/small_2x/muslim-malay-woman-doctor-in-hospital-with-copy-space-ai-generated-photo.jpg';
+
+      const userInfo = useUserInfo();
+      const router = useRouter();
+
+
+   const handleClick = (path:string) => {
+      if(userInfo?.id){
+         router.push(path)
+      }else{
+         router.push('/login')
+      }
+   }
+
 
    return (
       <Stack direction='row' gap={2}>
@@ -61,7 +78,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
                            variant='h6'
                            sx={{ color: 'primary.main', fontWeight: '600' }}
                         >
-                           Taka : {doctor?.apointmentFee}
+                           Taka : {doctor?.appointmentFee}
                         </Typography>
                         <Typography
                            variant='caption'
@@ -110,7 +127,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
                   </Typography>
                </Box>
                <Box>
-                  <Button component={Link} href={`/doctors/${doctor.id}`}>
+                  <Button onClick={()=>handleClick(`/doctors/${doctor.id}`)}>
                      View Details
                   </Button>
                </Box>

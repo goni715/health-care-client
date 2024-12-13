@@ -17,6 +17,20 @@ const doctorScheduleApi = baseApi.injectEndpoints({
       },
       providesTags: ["DoctorSchedules"],
     }),
+    getAllDoctorSchedules: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: "/doctor-schedule/get-all-doctor-schedules",
+        method: "GET",
+        params:arg
+      }),
+      transformResponse: (response: [], meta: TMeta) => {
+        return {
+          doctorSchedules: response,
+          meta,
+       };
+      },
+      providesTags: ["DoctorSchedules"],
+    }),
     createDoctorSchedule: build.mutation({
       query: (data) => ({
         url: `/doctor-schedule/create-doctor-schedule`,
@@ -35,4 +49,4 @@ const doctorScheduleApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetDoctorSchedulesQuery, useCreateDoctorScheduleMutation, useDeleteDoctorScheduleMutation } = doctorScheduleApi;
+export const { useGetDoctorSchedulesQuery, useGetAllDoctorSchedulesQuery, useCreateDoctorScheduleMutation, useDeleteDoctorScheduleMutation } = doctorScheduleApi;

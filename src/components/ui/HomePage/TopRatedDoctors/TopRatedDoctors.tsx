@@ -77,7 +77,7 @@ const TopRatedDoctors = async () => {
                     paddingBottom: '20px'
                   }}>
                     <Button >Book Now</Button>
-                    <Button variant="outlined">View Profile</Button>
+                    <Button component={Link} href={`/doctors/${doctor?.id}`} variant="outlined">View Profile</Button>
                   </CardActions>
                 </Card>
               </Grid>
