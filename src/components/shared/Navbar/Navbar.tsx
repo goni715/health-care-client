@@ -2,6 +2,7 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
+import useUserInfo from "@/hooks/useUserInfo";
 
 
 
@@ -12,10 +13,12 @@ const Navbar = () => {
     loading: () =>  <button className="logout-button"> logout</button>,
   })
 
-  const DashboardLink = dynamic(() => import('@/components/shared/Navbar/DashboardLink'), { 
-    ssr: false,
-    //loading: () =>  <button className="logout-button"> logout</button>,
-  })
+  // const DashboardLink = dynamic(() => import('@/components/shared/Navbar/DashboardLink'), { 
+  //   ssr: false,
+  //   //loading: () =>  <button className="logout-button"> logout</button>,
+  // })
+
+  const userInfo = useUserInfo();
 
 
 
@@ -45,7 +48,12 @@ const Navbar = () => {
               <Typography>Medicine</Typography>
               <Typography>Diagnostics</Typography>
               <Typography>NGOs</Typography>
-              <DashboardLink/>
+              {/* <DashboardLink/> */}
+              {
+                userInfo?.id && (
+                  <Typography component={Link} href="/dashboard">Dashboard</Typography>
+                )
+              }
              
             </Stack>
            <AuthButton/>
