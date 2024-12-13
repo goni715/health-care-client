@@ -1,11 +1,10 @@
 'use client';
-
 import React from 'react';
-import { useGetAllSpecialtiesQuery } from '@/redux/api/specialtiesApi';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
+import { useGetAllSpecialtiesQuery } from '@/redux/features/specialties/specialtiesApi';
 
 const ScrollCategory = ({ specialties }: { specialties: string }) => {
    const { data } = useGetAllSpecialtiesQuery(undefined);
@@ -26,6 +25,13 @@ const ScrollCategory = ({ specialties }: { specialties: string }) => {
             scrollButtons='auto'
             aria-label='scrollable auto tabs example'
          >
+            <Tab
+                  key="all"
+                  label="All"
+                  value="all"
+                  sx={{ fontWeight: 600 }}
+            />
+
             {data?.map((specialty: any) => (
                <Tab
                   key={specialty.id}
