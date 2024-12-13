@@ -16,7 +16,10 @@ const AllDoctorsPage = async ({searchParams}: PropType) => {
       res = await fetch('http://localhost:5000/api/v1/doctor/get-all-doctors');
     }else{
       res = await fetch(
-        `http://localhost:5000/api/v1/doctor/get-all-doctors?specialties=${searchParams.specialties}`
+        `http://localhost:5000/api/v1/doctor/get-all-doctors?specialties=${searchParams.specialties}`,{
+        next: {
+          revalidate: 60 //60 seconds
+        }}
      );
     }
    
