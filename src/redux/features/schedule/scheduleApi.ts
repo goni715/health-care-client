@@ -6,7 +6,7 @@ const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllSchedules: build.query({
       query: (arg: Record<string, any>) => ({
-        url: "/schedule/get-all-schedules",
+        url: "/schedule/get-all-schedules?page=1&limit=100",
         method: "GET",
         params:arg
       }),
