@@ -48,7 +48,48 @@ const DoctorScheduleSlots = ({ id }: TProps) => {
 
 
   //next day slots part
-  
+  const nextDate = new Date(currentDate);
+  nextDate.setDate(currentDate.getDate() + 1);
+  const tomorrow = nextDate.toLocaleDateString("en-US", { weekday: "long" });
+
+   // query params for next date
+   query.startDate = dayjs(nextDate)
+      .hour(0)
+      .minute(0)
+      .second(0)
+      .millisecond(0)
+      .toISOString();
+
+   query.endDate = dayjs(nextDate)
+      .hour(23)
+      .minute(59)
+      .second(59)
+      .millisecond(999)
+      .toISOString();
+
+   const { data: nextDoctorSchedules, isLoading: loading } =
+      useGetAllDoctorSchedulesQuery({
+         ...query,
+      });
+   const schedulesOfTomorrow = nextDoctorSchedules?.doctorSchedules;
+
+   const availableNextDaySlots = schedulesOfTomorrow?.filter(
+      (doctor: any) => !doctor.isBooked
+   );
+
+
+   const [createAppointment] = useCreateAppointmentMutation();
+
+
+
+   const handleAppointment = () => {
+      const payload = {
+         doctorId:id,
+         scheduleId
+      }
+
+      console.log(payload)
+   }
 
 
 
@@ -117,48 +158,54 @@ const DoctorScheduleSlots = ({ id }: TProps) => {
             </b>
           </Typography>
           <Box sx={{ borderBottom: "2px dashed #d0d0d0", mt: 2, mb: 3 }} />
-          {/* <Stack direction='row' alignItems='center' flexWrap='wrap' gap={2}>
-               {availableNextDaySlots?.length ? (
-                  isLoading ? (
-                     'Loading...'
-                  ) : (
-                     availableNextDaySlots?.map(
-                        (doctorSchedule: DoctorSchedule) => {
-                           const formattedTimeSlot = `${getTimeIn12HourFormat(
-                              doctorSchedule?.schedule?.startDate
-                           )} - ${getTimeIn12HourFormat(
-                              doctorSchedule?.schedule?.endDate
-                           )}`;
-
-                           return (
-                              <Button
-                                 key={doctorSchedule?.scheduleId}
-                                 color='primary'
-                                 onClick={() =>
-                                    setScheduleId(doctorSchedule?.scheduleId)
-                                 }
-                                 variant={`${
-                                    doctorSchedule?.scheduleId === scheduleId
-                                       ? 'contained'
-                                       : 'outlined'
-                                 }`}
-                              >
-                                 {formattedTimeSlot}
-                              </Button>
-                           );
-                        }
-                     )
-                  )
-               ) : (
-                  <span style={{ color: 'red' }}>
-                     No Schedule is Available Today!
+          <Stack direction="row" alignItems="center" flexWrap="wrap" gap={2}>
+            { isLoading
+            ? "Loading..."  
+            : (
+               <>
+                 {availableNextDaySlots?.length > 0 ? (
+                  <>
+                   {
+                     availableNextDaySlots?.map((doctorSchedule: any, index) => {
+                        return (
+                           <Button 
+                             key={index}
+                             onClick={() =>
+                              setScheduleId(doctorSchedule?.scheduleId)
+                             }
+                             variant={`${
+                              doctorSchedule?.scheduleId === scheduleId
+                                 ? 'contained'
+                                 : 'outlined'
+                           }`}
+                             >
+                             {moment(doctorSchedule.schedule.startDateTime).format(
+                               "h:mm a"
+                             )}{" "}
+                             to{" "}
+                             {moment(doctorSchedule.schedule.endDateTime).format(
+                               "h:mm a"
+                             )}
+                           </Button>
+                         );
+                      })
+                   }
+                  </>
+                 ): (
+                  <span style={{ color: "red" }}>
+                      No Schedule is Available for Tomorrow!
                   </span>
-               )}
-            </Stack> */}
+                 )
+
+                 }
+               </>
+              
+            )}
+          </Stack>
         </Box>
 
         <Button
-          // onClick={handleBookAppointment}
+          onClick={handleAppointment}
           sx={{ display: "block", mx: "auto" }}
         >
           Book Appointment Now
