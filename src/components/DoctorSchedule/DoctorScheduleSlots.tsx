@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useGetAllDoctorSchedulesQuery } from "@/redux/features/doctorSchedule/doctorScheduleApi";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
+import { useCreateAppointmentMutation } from "@/redux/features/appointment/appointmentApi";
 
 type TProps = {
   id: string;
@@ -78,17 +79,32 @@ const DoctorScheduleSlots = ({ id }: TProps) => {
    );
 
 
-   const [createAppointment] = useCreateAppointmentMutation();
+   const [createAppointment, {isLoading}] = useCreateAppointmentMutation();
 
 
 
-   const handleAppointment = () => {
+   const handleAppointment = async() => {
       const payload = {
          doctorId:id,
          scheduleId
       }
 
-      console.log(payload)
+      try {
+        if (id && scheduleId) {
+           const res = await createAppointment(payload).unwrap();
+
+           if (res.id) {
+              const response = await initialPayment(res.id).unwrap();
+
+              if (response.paymentUrl) {
+                 router.push(response.paymentUrl);
+              }
+           }
+        }
+     } catch (error) {
+        console.log(error);
+     }
+
    }
 
 
