@@ -8,6 +8,8 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import { useCreateAppointmentMutation } from "@/redux/features/appointment/appointmentApi";
 import { useInitialPaymentMutation } from "@/redux/payment/paymentApi";
+import { ErrorToast, LoadingToast, SuccessToast } from "@/helper/ValidationHelper";
+
 
 type TProps = {
   id: string;
@@ -92,12 +94,15 @@ const DoctorScheduleSlots = ({ id }: TProps) => {
          scheduleId
       }
 
+      const toastId = LoadingToast('Processing...');
+
       try {
         if (id && scheduleId) {
            const res = await createAppointment(payload).unwrap();
 
            if (res.id) {
               const response = await initialPayment(res.id).unwrap();
+              SuccessToast("Appointment Booking Success", toastId)
 
               if (response.paymentUrl) {
                  router.push(response.paymentUrl);

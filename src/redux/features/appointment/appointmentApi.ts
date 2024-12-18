@@ -5,7 +5,7 @@ export const appointmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createAppointment: build.mutation({
       query: (data) => ({
-        url: "/appointment",
+        url: "/appointment/create-appointment",
         method: "POST",
         data,
       }),
@@ -25,7 +25,7 @@ export const appointmentApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: ["Appointment"],
+      providesTags: ["Appointments"],
     }),
     getMyAppointments: build.query({
       query: (arg: Record<string, any>) => {
