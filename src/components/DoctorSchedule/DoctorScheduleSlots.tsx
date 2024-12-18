@@ -7,6 +7,7 @@ import { useGetAllDoctorSchedulesQuery } from "@/redux/features/doctorSchedule/d
 import { Box, Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import { useCreateAppointmentMutation } from "@/redux/features/appointment/appointmentApi";
+import { useInitialPaymentMutation } from "@/redux/payment/paymentApi";
 
 type TProps = {
   id: string;
@@ -79,7 +80,9 @@ const DoctorScheduleSlots = ({ id }: TProps) => {
    );
 
 
-   const [createAppointment, {isLoading}] = useCreateAppointmentMutation();
+   const [createAppointment, {isLoading:aLoading}] = useCreateAppointmentMutation();
+   const [initialPayment] = useInitialPaymentMutation();
+
 
 
 

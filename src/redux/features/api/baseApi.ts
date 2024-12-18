@@ -8,7 +8,7 @@ export const baseApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
   }),
-  tagTypes: ['Specialties', 'Doctors', 'Doctor', 'Schedules', "User", "DoctorSchedules", "Appointments"],
+  tagTypes: ['Specialties', 'Doctors', 'Doctor', 'Schedules', "User", "DoctorSchedules", "Appointments", "Payments"],
   endpoints: () => ({})
 })
 

@@ -1,16 +1,14 @@
-import { baseApi } from './baseApi';
-import { tagTypes } from '../tag-types';
+import { baseApi } from "../features/api/baseApi";
 
-export const BASE_STUDENT_SEMESTER_PAYMENT = '/student-semester-payments';
 
 const paymentApi = baseApi.injectEndpoints({
    endpoints: (build) => ({
       initialPayment: build.mutation({
          query: (id: string) => ({
-            url: `/payment/init/${id}`,
+            url: `/payment/init-payment/${id}`,
             method: 'POST',
          }),
-         invalidatesTags: [tagTypes.payment],
+         invalidatesTags: ["Payments"],
       }),
    }),
 });
